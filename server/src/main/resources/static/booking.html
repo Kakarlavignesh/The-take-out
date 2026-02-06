@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Book A Table - The Takeout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">The Takeout</div>
+        <ul class="nav-links">
+            <!-- Home link removed -->
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html" class="active">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('openAdmin', 'true')">Admin Login</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <div style="max-width:500px; margin:auto; background:rgba(255,255,255,0.05); padding:2rem; border-radius:10px;">
+            <h2 style="color:var(--accent-color); margin-bottom:1rem;">Reserve Your Spot</h2>
+            <form onsubmit="bookTable(event)">
+                <input type="text" id="name" placeholder="Your Name"
+                    style="width:100%; padding:10px; margin-bottom:1rem;" required>
+                <input type="date" id="date" style="width:100%; padding:10px; margin-bottom:1rem;" required>
+                <input type="time" id="time" style="width:100%; padding:10px; margin-bottom:1rem;" required>
+                <input type="number" id="guests" placeholder="Number of Guests"
+                    style="width:100%; padding:10px; margin-bottom:1rem;" required>
+                <button type="submit" class="cta-button">Confirm Booking</button>
+            </form>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+    <script>
+        async function bookTable(e) {
+            e.preventDefault();
+            const data = {
+                customerName: document.getElementById('name').value,
+                date: document.getElementById('date').value,
+                time: document.getElementById('time').value,
+                numberOfGuests: document.getElementById('guests').value
+            };
+
+            const res = await fetch('/api/reservations', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(data)
+            });
+
+            if (res.ok) alert("Table Booked Successfully!");
+        }
+    </script>
+    <a href="index.html"
+        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
+        Back to Home</a>
+</body>
+
+</html>

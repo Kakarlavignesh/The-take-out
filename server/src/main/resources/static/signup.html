@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Registration - The Takeout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Staff Portal</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Main Site</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <div style="max-width:500px; margin:auto; background:rgba(255,255,255,0.05); padding:2rem; border-radius:10px;">
+            <h2 style="margin-bottom:1rem;">New Staff Registration</h2>
+            <form onsubmit="staffSignup(event)">
+                <input type="text" id="new-emp-id" placeholder="Employee ID (8 digits)" pattern="\d{8}" required
+                    style="width:100%; padding:10px; margin-bottom:1rem;">
+                <input type="text" id="new-emp-name" placeholder="Full Name" required
+                    style="width:100%; padding:10px; margin-bottom:1rem;">
+
+                <select id="new-emp-role" style="width:100%; padding:10px; margin-bottom:1rem;">
+                    <option value="Server">Server</option>
+                    <option value="Chef">Chef</option>
+                    <option value="Host">Host</option>
+                </select>
+
+                <select id="new-emp-dept" style="width:100%; padding:10px; margin-bottom:1rem;">
+                    <option value="Service">Service</option>
+                    <option value="Kitchen">Kitchen</option>
+                    <option value="Management">Management</option>
+                </select>
+
+                <input type="number" id="new-emp-salary" placeholder="Base Salary (10000 - 50000)" min="10000"
+                    max="50000" required style="width:100%; padding:10px; margin-bottom:1rem;">
+
+                <button type="submit" class="cta-button" style="width:100%;">Register</button>
+            </form>
+            <p style="text-align:center; margin-top:1rem;">Already have an ID? <a href="login.html"
+                    style="color:var(--accent-color);">Login Here</a></p>
+            <div style="text-align:center; margin-top:1rem;">
+                <a href="index.html" style="color:#aaa;">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Includes Login Modal for redirection -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('user')">User</button>
+                <button class="tab-btn" onclick="switchTab('staff')">Staff</button>
+            </div>
+            <!-- ... forms managed by app.js ... -->
+            <form id="staff-login" class="login-form">
+                <h3>Staff Portal</h3>
+                <input type="text" placeholder="Employee ID" id="emp-id"><input type="password" placeholder="Pass"
+                    id="emp-pass"><button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        // Override switchTab slightly for this page flow if needed, but app.js handles it mostly.
+    </script>
+</body>
+
+</html>

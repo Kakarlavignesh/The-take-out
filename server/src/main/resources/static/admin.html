@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Department Portal - The Takeout</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 1rem;
+        }
+
+        th,
+        td {
+            padding: 1rem;
+            border: 1px solid var(--glass-border);
+            text-align: left;
+        }
+
+        th {
+            background: rgba(0, 0, 0, 0.5);
+            color: var(--accent-color);
+        }
+
+        tr:nth-child(even) {
+            background: rgba(255, 255, 255, 0.02);
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">Department Portal</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Main Site</a></li>
+            <li><a href="#" onclick="logout()">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section id="auth-section">
+        <div style="max-width:400px; margin:auto; text-align:center;">
+            <h3>Department Head Login</h3>
+            <input type="password" id="admin-secret" placeholder="Enter Department Head Secret Code"
+                onkeyup="checkAdminCode()" style="padding:10px; width:100%; margin:1rem 0;">
+            <button onclick="accessAdmin()" class="cta-button">Access Salaries</button>
+            <div style="text-align:center; margin-top:1rem;">
+                <a href="index.html" style="color:#aaa;">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="dashboard" style="display:none;">
+        <h2>Employee Salaries & Performance</h2>
+        <div style="overflow-x:auto;">
+            <tbody id="salary-table">
+                <!-- Loaded via JS -->
+            </tbody>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+    <script>
+        async function accessAdmin() {
+            const code = document.getElementById('secret-code').value;
+            const res = await fetch('/api/employees/salaries', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ secretCode: code })
+            });
+
+            if (res.ok) {
+                const employees = await res.json();
+                document.getElementById('auth-section').style.display = 'none';
+                document.getElementById('dashboard').style.display = 'block';
+                renderTable(employees);
+            } else {
+                alert("Access Denied: Invalid Secret Code");
+            }
+        }
+
+        function renderTable(employees) {
+            const html = `
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Role</th>
+                            <th>Salary</th>
+                            <th>Performance</th>
+                            <th>Good Feedbacks</th>
+                            <th>Attendance</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${employees.map(e => `
+                            <tr>
+                                <td>${e.id}</td>
+                                <td>${e.name}</td>
+                                <td>${e.role}</td>
+                                <td>$${e.salary.toFixed(2)}</td>
+                                <td>${e.performanceRating}</td>
+                                <td>${e.goodStandingCount}</td>
+                                <td>${e.daysPresent || 0} Days</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+            document.getElementById('salary-table').innerHTML = html;
+        }
+    </script>
+    <a href="index.html"
+        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
+        Back to Home</a>
+</body>
+
+</html>

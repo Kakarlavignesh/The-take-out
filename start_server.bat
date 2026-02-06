@@ -1,0 +1,16 @@
+@echo off
+echo Stopping any existing servers...
+taskkill /F /IM java.exe 2>nul
+timeout /t 2 /nobreak >nul
+
+echo Starting The Takeout Server...
+echo Entering server directory...
+cd server
+echo Running auto-setup script...
+powershell -ExecutionPolicy Bypass -File "debug_run.ps1"
+if %errorlevel% neq 0 (
+    echo.
+    echo [ERROR] Script failed. Attempting fallback...
+    mvn spring-boot:run
+)
+pause

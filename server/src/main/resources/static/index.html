@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Takeout - Premium Dining Experience</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <!-- Google Fonts for Premium Look -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="homepage">
+    <nav class="navbar">
+        <div class="logo">The Takeout</div>
+        <ul class="nav-links">
+            <!-- Home link removed -->
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="#"
+                    onclick="document.getElementById('login-modal').style.display='block'; switchTab('admin')">Admin
+                    Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="animate-fade-in">Experience Culinary Excellence</h1>
+            <p class="animate-slide-up">Taste the finest flavors from around the world, crafted with passion.</p>
+            <div class="hero-buttons animate-slide-up" style="animation-delay: 0.2s;">
+                <a href="menu.html" class="cta-button">View Menu</a>
+                <a href="booking.html" class="cta-button">Book Table</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="feature-card">
+            <div class="icon">🌿</div>
+            <h3>Fresh Ingredients</h3>
+            <p>Farm-to-table freshness in every bite.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">👨‍🍳</div>
+            <h3>Master Chefs</h3>
+            <p>Culinary artistry by world-renowned experts.</p>
+        </div>
+        <div class="feature-card">
+            <div class="icon">✨</div>
+            <h3>Premium Ambience</h3>
+            <p>Dining reimagined for comfort and style.</p>
+        </div>
+    </section>
+
+    <!-- Login Modal (Hidden by default) -->
+    <div id="login-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeLogin()">&times;</span>
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('user')">User</button>
+                <button class="tab-btn" onclick="switchTab('staff')">Staff</button>
+                <button class="tab-btn" onclick="switchTab('admin')">Admin</button>
+            </div>
+
+            <!-- User Login -->
+            <form id="user-login" class="login-form">
+                <h3>Customer Login</h3>
+                <input type="text" placeholder="Mobile Number" id="mobile" required>
+                <button type="button" onclick="sendOtp()">Send OTP</button>
+                <input type="text" placeholder="Enter OTP (Mock: 1234)" id="otp" style="display:none;">
+                <button type="submit" id="login-btn" style="display:none;">Login</button>
+                <div class="divider">OR</div>
+                <button type="button" class="google-btn">Login with Google</button>
+            </form>
+
+            <form id="staff-login" class="login-form" style="display:none;">
+                <h3>Staff Portal</h3>
+                <input type="text" placeholder="Employee ID (8 digits)" id="emp-id" required>
+                <input type="password" placeholder="Password" id="emp-pass" required>
+                <button type="submit">Login</button>
+            </form>
+
+            <!-- Admin Login -->
+            <form id="admin-login" class="login-form" style="display:none;" onsubmit="handleStaffLogin(event)">
+                <h3>Admin Portal</h3>
+                <input type="text" placeholder="Admin ID" id="admin-id" required>
+                <input type="password" placeholder="Password" id="admin-pass" required>
+                <button type="submit">Login</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            if (localStorage.getItem('openAdmin') === 'true') {
+                localStorage.removeItem('openAdmin');
+                document.getElementById('login-modal').style.display = 'block';
+                if (typeof switchTab === 'function') switchTab('admin');
+            }
+        });
+
+        // Ensure modal closing works
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        // Make sure clicking outside closes it
+        window.onclick = function (event) {
+            const modal = document.getElementById('login-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Offers - The Takeout</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">The Takeout</div>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="offers.html" class="active">Offers</a></li>
+            <li><a href="#" onclick="showLogin()">Login</a></li>
+            <li><a href="admin.html">Admin</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2 style="color:var(--accent-color); text-align:center;">Special Offers</h2>
+        <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:2rem;">
+            <!-- Static Offers -->
+            <div
+                style="background:rgba(255,215,0,0.1); padding:2rem; border:1px solid var(--accent-color); border-radius:15px; width:300px; text-align:center;">
+                <h3>Weekend Feast</h3>
+                <p>Get 20% off on Family Platters every Saturday & Sunday!</p>
+                <button class="cta-button" style="margin-top:1rem;">Book Now</button>
+            </div>
+
+            <div
+                style="background:rgba(255,215,0,0.1); padding:2rem; border:1px solid var(--accent-color); border-radius:15px; width:300px; text-align:center;">
+                <h3>Loyalty Bonus</h3>
+                <p>Use your coins to get up to $50 off on next visit.</p>
+                <small>Requires valid Wallet QR</small>
+            </div>
+        </div>
+        <div style="text-align:center; margin-top:2rem;">
+            <a href="index.html" class="cta-button" style="background:transparent; border:1px solid white;">← Back to
+                Home</a>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+    <a href="index.html"
+        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
+        Back to Home</a>
+</body>
+
+</html>
