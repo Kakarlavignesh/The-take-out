@@ -19,6 +19,7 @@
             <div class="logo-smile"></div>
         </div>
         <ul class="nav-links">
+            <!-- Home link removed -->
             <li><a href="menu.html">Menu</a></li>
             <li><a href="booking.html">Book A Table</a></li>
             <li><a href="orders.html">Orders</a></li>
@@ -530,14 +531,28 @@
             <div class="login-info">
                 <h2>Welcome</h2>
                 <p>Access your dashboard or order delicious food.</p>
+                <div style="margin-top: 2rem;">
+                    <p style="font-size: 0.9rem; opacity: 0.8;">New Staff?</p>
+                    <a href="signup.html"
+                        style="color: var(--accent-color); text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--accent-color); padding-bottom: 2px;">Register
+                        Here</a>
+                </div>
             </div>
 
             <!-- Right Side: Forms -->
             <div class="login-form-section">
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" onclick="switchTab('user')">User</button>
+                    <button class="auth-tab-btn" onclick="switchTab('staff')">Staff</button>
+                    <button class="auth-tab-btn" onclick="switchTab('admin')">Admin</button>
+                </div>
+
                 <!-- User Login -->
                 <form id="user-login" onsubmit="handleUserLogin(event)">
                     <div class="input-box">
                         <input type="text" id="user-mobile" required>
+                        <!-- Changed ID to match standalone login.html for consistency, will update app.js to support both or standardize -->
                         <label>Mobile Number</label>
                     </div>
 
@@ -556,6 +571,32 @@
                     <button type="button" class="login-btn-neon" onclick="handleGoogleLogin()"
                         style="border-color:#fff; color:#fff; font-size:0.9rem; margin-top:10px;">Login with
                         Google</button>
+                </form>
+
+                <!-- Staff Login -->
+                <form id="staff-login" style="display:none;" onsubmit="handleStaffLogin(event)">
+                    <div class="input-box">
+                        <input type="text" id="emp-id" required>
+                        <label>Employee ID</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="emp-pass" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Staff Login</button>
+                </form>
+
+                <!-- Admin Login -->
+                <form id="admin-login" style="display:none;" onsubmit="handleStaffLogin(event)">
+                    <div class="input-box">
+                        <input type="text" id="admin-id" required>
+                        <label>Admin ID</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="admin-pass" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Admin Login</button>
                 </form>
             </div>
         </div>

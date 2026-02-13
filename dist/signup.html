@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Staff Registration - The Takeout</title>
+    <link rel="stylesheet" href="style.css?v=3">
+</head>
+
+<body>
+    <div class="login-wrapper">
+        <div class="login-container-neon" style="height: auto; min-height: 550px; padding-bottom: 20px;">
+            <!-- Adjusted height -->
+
+            <!-- Left Side: Info -->
+            <div class="login-info">
+                <h2>Join the Team</h2>
+                <p style="color: #ffffff; font-size: 1.1rem;">Become part of The Takeout family.</p>
+                <div style="margin-top: 2rem;">
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Already have an ID?</p>
+                    <a href="login.html"
+                        style="color: var(--accent-color); text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--accent-color); padding-bottom: 2px;">Login
+                        Here</a>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.9rem; opacity: 0.7;">←
+                        Back to Home</a>
+                </div>
+            </div>
+
+            <!-- Right Side: Form -->
+            <div class="login-form-section">
+                <form onsubmit="staffSignup(event)" autocomplete="off">
+                    <div class="input-box">
+                        <input type="text" id="new-emp-id" pattern="\d{8}" required placeholder=" ">
+                        <label>Employee ID (8 digits)</label>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="text" id="new-emp-name" required placeholder=" ">
+                        <label>Full Name</label>
+                    </div>
+
+                    <div class="input-box">
+                        <select id="new-emp-role" required style="color: #fff;">
+                            <option value="Server">Server</option>
+                            <option value="Chef">Chef</option>
+                            <option value="Host">Host</option>
+                        </select>
+                        <!-- Force label up for select -->
+                        <label style="top: -10px; color: var(--accent-color); font-size: 0.85rem;">Role</label>
+                    </div>
+
+                    <div class="input-box">
+                        <select id="new-emp-dept" required style="color: #fff;">
+                            <option value="Service">Service</option>
+                            <option value="Kitchen">Kitchen</option>
+                            <option value="Management">Management</option>
+                        </select>
+                        <!-- Force label up for select -->
+                        <label style="top: -10px; color: var(--accent-color); font-size: 0.85rem;">Department</label>
+                    </div>
+
+                    <div class="input-box">
+                        <input type="number" id="new-emp-salary" min="10000" max="50000" required>
+                        <label>Base Salary (10k - 50k)</label>
+                    </div>
+
+                    <button type="submit" class="login-btn-neon">Register Staff</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+
+</html>

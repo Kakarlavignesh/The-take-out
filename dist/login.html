@@ -18,6 +18,12 @@
             <div class="login-info">
                 <h2>Welcome Back!</h2>
                 <p>We're delighted to have you here.</p>
+                <div style="margin-top: 2rem;">
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Don't have an account?</p>
+                    <a href="signup.html"
+                        style="color: var(--accent-color); text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--accent-color); padding-bottom: 2px;">Register
+                        Staff</a>
+                </div>
                 <div style="margin-top: 1rem;">
                     <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.9rem; opacity: 0.7;">←
                         Back to Home</a>
@@ -26,6 +32,13 @@
 
             <!-- Right Side: Forms -->
             <div class="login-form-section">
+
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" onclick="showForm('user')">User</button>
+                    <button class="auth-tab-btn" onclick="showForm('staff')">Staff</button>
+                    <button class="auth-tab-btn" onclick="showForm('admin')">Admin</button>
+                </div>
 
                 <!-- User Form -->
                 <form id="user-form" onsubmit="handleUserLogin(event)" autocomplete="off">
@@ -37,7 +50,7 @@
                     <div id="otp-section" style="display:none;">
                         <div class="input-box">
                             <input type="text" id="user-otp" placeholder=" ">
-                            <label>Enter OTP</label>
+                            <label>Enter OTP (Try: 1234)</label>
                         </div>
                     </div>
 
@@ -45,13 +58,60 @@
                         OTP</button>
                     <button type="submit" id="login-btn" class="login-btn-neon" style="display:none;">Login</button>
                 </form>
+
+                <!-- Staff Form -->
+                <form id="staff-form" style="display:none;" onsubmit="handleStaffLogin(event)" autocomplete="off">
+                    <div class="input-box">
+                        <input type="text" id="staff-id" required placeholder=" ">
+                        <label>Employee ID (8 Digits)</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="staff-pass" required placeholder=" ">
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Staff Login</button>
+                </form>
+
+                <!-- Admin Form -->
+                <form id="admin-form" style="display:none;" onsubmit="handleStaffLogin(event)" autocomplete="off">
+                    <div class="input-box">
+                        <input type="text" id="admin-id" required placeholder=" ">
+                        <label>Admin ID</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="admin-pass" required placeholder=" ">
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Admin Login</button>
+                </form>
+
             </div>
         </div>
     </div>
 
     <script src="app.js"></script>
     <script>
-        // Placeholder for user-specific login scripts
+        function showForm(type) {
+            // Remove active class from all tabs
+            document.querySelectorAll('.auth-tab-btn').forEach(t => t.classList.remove('active'));
+
+            // Hide all forms
+            document.getElementById('user-form').style.display = 'none';
+            document.getElementById('staff-form').style.display = 'none';
+            document.getElementById('admin-form').style.display = 'none';
+
+            // Show selected
+            if (type === 'user') {
+                document.getElementById('user-form').style.display = 'block';
+                document.querySelectorAll('.auth-tab-btn')[0].classList.add('active');
+            } else if (type === 'staff') {
+                document.getElementById('staff-form').style.display = 'block';
+                document.querySelectorAll('.auth-tab-btn')[1].classList.add('active');
+            } else if (type === 'admin') {
+                document.getElementById('admin-form').style.display = 'block';
+                document.querySelectorAll('.auth-tab-btn')[2].classList.add('active');
+            }
+        }
     </script>
 </body>
 
