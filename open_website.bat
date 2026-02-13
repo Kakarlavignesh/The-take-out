@@ -1,0 +1,3 @@
+@echo off
+echo Opening The Takeout website...
+start http://localhost:9091

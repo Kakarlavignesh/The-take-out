@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Menu - The Takeout</title>
+    <link rel="stylesheet" href="style.css?v=5">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Styles moved to style.css */
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- Image removed as per user request -->
+            The Takeout
+        </div>
+        <ul class="nav-links">
+            <!-- Home link removed -->
+            <li><a href="menu.html" class="active">Menu</a></li>
+            <li><a href="booking.html">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('openAdmin', 'true')">Admin Login</a></li>
+            <li><button id="theme-toggle" onclick="toggleTheme()" class="theme-btn">☀️/🌙</button></li>
+        </ul>
+    </nav>
+
+    <section>
+        <div class="filters">
+            <button class="filter-btn active" onclick="loadMenu('ALL')">All</button>
+            <button class="filter-btn" onclick="loadMenu('BREAKFAST')">Breakfast</button>
+            <button class="filter-btn" onclick="loadMenu('LUNCH')">Lunch</button>
+            <button class="filter-btn" onclick="loadMenu('SNACK')">Snacks</button>
+            <button class="filter-btn" onclick="loadMenu('DINNER')">Dinner</button>
+        </div>
+
+        <div id="menu-container" class="menu-grid">
+            <!-- Items loaded via JS -->
+            <p style="text-align:center;">Loading exquisite dishes...</p>
+        </div>
+        <!-- Bottom link removed as requested -->
+    </section>
+
+    <a href="index.html" class="floating-back-btn">← Back to Home</a>
+    <!-- Dish Detail Modal -->
+    <div id="dish-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal('dish-modal')">&times;</span>
+            <img id="modal-img" src="" alt="Dish" class="modal-img">
+            <div class="modal-info">
+                <h2 id="modal-title">Dish Name</h2>
+                <p id="modal-desc">Description goes here.</p>
+                <div class="ingredients-list">
+                    <strong>Ingredients:</strong>
+                    <p id="modal-ingredients">List of ingredients...</p>
+                </div>
+                <div class="quantity-control">
+                    <button class="qty-btn" onclick="updateModalQty(-1)">-</button>
+                    <span id="qty-display">1</span>
+                    <button class="qty-btn" onclick="updateModalQty(1)">+</button>
+                </div>
+                <button class="cta-button" onclick="addToCartFromModal()">Add to Cart - $<span
+                        id="modal-price">0</span></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cart Floating Button -->
+    <div class="cart-float" onclick="openCart()">
+        🛒
+        <div class="cart-count" id="cart-count">0</div>
+    </div>
+
+    <!-- Cart Modal -->
+    <div id="cart-modal" class="modal">
+        <div class="modal-content" style="width: 500px;">
+            <span class="close" onclick="closeModal('cart-modal')">&times;</span>
+            <h2 style="color:var(--accent-color); font-family:var(--font-heading);">Your Order</h2>
+            <div id="cart-items">
+                <!-- Items go here -->
+                <p style="text-align:center; color:#888;">Your cart is empty.</p>
+            </div>
+            <div class="cart-total">
+                Total: $<span id="cart-total">0.00</span>
+            </div>
+            <div style="margin-top:1.5rem; display:flex; gap:1rem;">
+                <button class="cta-button"
+                    style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); flex:1;"
+                    onclick="clearCart()">Clear</button>
+                <button class="cta-button" style="flex:2;" onclick="generateBill()">Checkout & Bill</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Print Bill Section (Hidden until print) -->
+    <div id="bill-section" style="display:none;">
+        <div style="text-align:center; border-bottom:2px dashed #000; padding-bottom:1rem; margin-bottom:1rem;">
+            <h1 style="font-size:2rem; margin:0;">THE TAKEOUT</h1>
+            <p>123 Culinary Ave, Food City</p>
+            <p>Tel: +1 234 567 890</p>
+        </div>
+        <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
+            <span>Date: <span id="bill-date"></span></span>
+            <span>Order #: <span id="bill-id"></span></span>
+        </div>
+        <table style="width:100%; border-collapse:collapse; text-align:left;">
+            <thead>
+                <tr style="border-bottom:1px solid #000;">
+                    <th style="padding:5px;">Item</th>
+                    <th style="padding:5px;">Qty</th>
+                    <th style="padding:5px; text-align:right;">Price</th>
+                    <th style="padding:5px; text-align:right;">Total</th>
+                </tr>
+            </thead>
+            <tbody id="bill-items">
+                <!-- Rows -->
+            </tbody>
+        </table>
+        <div style="text-align:right; margin-top:1rem; font-size:1.2rem; font-weight:bold;">
+            Grand Total: $<span id="bill-total">0.00</span>
+        </div>
+        <div style="text-align:center; margin-top:2rem; font-size:0.9rem;">
+            <p>Thank you for dining with us!</p>
+            <p>Please visit again.</p>
+        </div>
+    </div>
+
+    <script src="app.js?v=2"></script>
+</body>
+
+</html>

@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Feedback - The Takeout</title>
+    <link rel="stylesheet" href="style.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+    <style>
+        .feedback-container {
+            max-width: 600px;
+            margin: 2rem auto;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .rating-control {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        input[type="range"] {
+            width: 100%;
+            margin: 1rem 0;
+            accent-color: var(--accent-color);
+        }
+
+        .emoji-display {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            animation: float 3s infinite ease-in-out;
+        }
+
+        .rating-value {
+            font-size: 2rem;
+            color: var(--accent-color);
+            font-family: var(--font-heading);
+        }
+
+        .status-text {
+            font-size: 1.2rem;
+            color: #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- Image removed as per user request -->
+            The Takeout
+        </div>
+        <ul class="nav-links">
+            <!-- Home link removed -->
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="feedback.html" class="active">Feedback</a></li>
+            <li><a href="index.html" onclick="localStorage.setItem('openAdmin', 'true')">Admin Login</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <div class="feedback-container">
+            <h2 style="text-align:center; color: var(--accent-color);">Rate Your Experience</h2>
+
+            <div class="rating-control">
+                <div class="emoji-display" id="emoji">😐</div>
+                <div class="rating-value"><span id="rating-val">5.0</span>/10</div>
+                <div class="status-text" id="status-text">Average</div>
+
+                <input type="range" min="0" max="10" step="0.5" value="5.0" id="rating-slider"
+                    oninput="updateRating(this.value)">
+            </div>
+
+            <form onsubmit="submitFeedbackForm(event)">
+                <label>Employee ID (8 Digits) <small>(Optional)</small></label>
+                <input type="text" id="emp-id" placeholder="e.g. 12345678" pattern="\d{8}"
+                    style="width:100%; padding:10px; margin-bottom:1rem; border-radius:5px; border:none;">
+
+                <label>Comments</label>
+                <textarea id="comment" rows="4"
+                    style="width:100%; padding:10px; margin-bottom:1rem; border-radius:5px; border:none;"></textarea>
+
+                <button type="submit" class="cta-button" style="width:100%; cursor:pointer;">Submit Feedback</button>
+            </form>
+            <div style="text-align:center; margin-top:1rem;">
+                <a href="index.html" style="color:#aaa;">← Back to Home</a>
+            </div>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+    <script>
+        function updateRating(val) {
+            document.getElementById('rating-val').innerText = parseFloat(val).toFixed(1);
+            const emojiEl = document.getElementById('emoji');
+            const statusEl = document.getElementById('status-text');
+
+            val = parseFloat(val);
+
+            if (val <= 2.5) {
+                emojiEl.innerText = '😞';
+                statusEl.innerText = 'Poor';
+                statusEl.style.color = '#ff4d4d';
+            } else if (val <= 5) {
+                emojiEl.innerText = '😐';
+                statusEl.innerText = 'Average';
+                statusEl.style.color = '#ffd700';
+            } else if (val <= 7.5) {
+                emojiEl.innerText = '🙂';
+                statusEl.innerText = 'Good';
+                statusEl.style.color = '#90ee90';
+            } else if (val <= 9) {
+                emojiEl.innerText = '😁';
+                statusEl.innerText = 'Very Good';
+                statusEl.style.color = '#00ced1';
+            } else {
+                emojiEl.innerText = '🤩';
+                statusEl.innerText = 'Excellent';
+                statusEl.style.color = '#ff00ff'; // Special color for excellent
+            }
+        }
+
+        async function submitFeedbackForm(e) {
+            e.preventDefault();
+            const empId = document.getElementById('emp-id').value;
+            const rating = document.getElementById('rating-slider').value;
+            const comment = document.getElementById('comment').value;
+
+            if (empId && empId.length !== 8) {
+                return alert("Employee ID must be 8 digits if provided.");
+            }
+
+            await submitFeedback(empId, rating, comment);
+            // Reset form
+            document.getElementById('comment').value = '';
+            alert("Feedback submitted!");
+        }
+    </script>
+
+</body>
+
+</html>

@@ -5,8 +5,8 @@ import jakarta.persistence.*;
 @Entity
 public class Employee {
     @Id
-    @Column(length = 8)
-    private String id; // 8 Digit ID
+    @Column(length = 50)
+    private String id; // Flexible ID length
 
     private String name;
     private String role; // e.g., Head, Vice Head, Staff

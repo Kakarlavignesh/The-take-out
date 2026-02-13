@@ -3,110 +3,554 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>My Profile - The Takeout</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        .wallet-card {
-            background: linear-gradient(135deg, var(--accent-color), #daa520);
+        /* PROFILE PAGE EXCLUSIVE STYLES */
+        body {
+            background-color: #050810;
+            background-image: radial-gradient(circle at center, #111827 0%, #050810 100%);
+            min-height: 100vh;
+            margin: 0;
+            font-family: 'Lato', sans-serif;
+            color: #fff;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background: transparent !important;
+            /* Seamless navbar */
+            border: none !important;
+        }
+
+        .profile-container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            perspective: 1200px;
+            /* Deep perspective for 3D */
             padding: 2rem;
-            border-radius: 20px;
-            color: black;
+        }
+
+        /* 3D Wallet Card */
+        .glass-panel-obsidian {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
             text-align: center;
-            max-width: 400px;
-            margin: auto;
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.5),
+                inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            /* Smooth tilt */
             position: relative;
             overflow: hidden;
         }
 
-        .wallet-card::before {
+        /* Inner 3D Elements */
+        .cinematic-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            letter-spacing: 2px;
+            color: #fff;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+            transform: translateZ(30px);
+            /* Popping out */
+        }
+
+        .balance-wrapper {
+            margin: 3rem 0;
+            position: relative;
+            transform: translateZ(60px);
+            /* Popping out more */
+        }
+
+        .text-liquid-gold {
+            font-family: 'Playfair Display', serif;
+            font-size: 5rem;
+            font-weight: 700;
+            display: block;
+            background: linear-gradient(135deg, #FFD700, #B8860B, #FFD700);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            filter: drop-shadow(0 0 15px rgba(212, 175, 55, 0.4));
+        }
+
+        .coin-label {
+            color: #aaa;
+            font-size: 1rem;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            transform: translateZ(20px);
+        }
+
+        .scan-section {
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 1.5rem;
+            transform: translateZ(10px);
+        }
+
+        .text-neon-cyber {
+            font-family: 'Courier New', monospace;
+            color: #0ff;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.3);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Ambient Glow Behind Card */
+        .ambient-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.15) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Buttons */
+        .action-buttons {
+            margin-top: 4rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            align-items: center;
+            transform: translateZ(20px);
+        }
+
+        .cta-button-3d {
+            background: linear-gradient(45deg, #FF8C00, #ffaa33);
+            color: #000;
+            border: none;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            text-transform: uppercase;
+            box-shadow: 0 10px 20px rgba(255, 140, 0, 0.3);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            font-size: 0.9rem;
+        }
+
+        .cta-button-3d:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 15px 30px rgba(255, 140, 0, 0.5);
+        }
+
+        .back-link-3d {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            font-size: 0.9rem;
+            padding: 0.8rem 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 50px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .back-link-3d:hover {
+            color: #fff;
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border: 1px solid #333;
+            border-radius: 20px;
+            padding: 2rem;
+            text-align: center;
+            position: relative;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.8);
+        }
+
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            color: #aaa;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        /* 3D Gift Animation */
+        .gift-container {
+            width: 150px;
+            height: 150px;
+            margin: 20px auto;
+            position: relative;
+            cursor: pointer;
+            perspective: 600px;
+            z-index: 2;
+            /* Ensure clickable */
+        }
+
+        .gift-box {
+            width: 100%;
+            height: 100%;
+            position: relative;
+            transform-style: preserve-3d;
+            transform: rotateX(-20deg) rotateY(45deg);
+            transition: transform 0.5s ease;
+            animation: bounce 2s infinite ease-in-out;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            100% {
+                transform: rotateX(-20deg) rotateY(45deg) translateY(0);
+            }
+
+            50% {
+                transform: rotateX(-20deg) rotateY(45deg) translateY(-20px);
+            }
+        }
+
+        .gift-container:hover .gift-box {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% {
+                transform: rotateX(-20deg) rotateY(45deg) rotateZ(0deg);
+            }
+
+            25% {
+                transform: rotateX(-20deg) rotateY(45deg) rotateZ(5deg);
+            }
+
+            75% {
+                transform: rotateX(-20deg) rotateY(45deg) rotateZ(-5deg);
+            }
+
+            100% {
+                transform: rotateX(-20deg) rotateY(45deg) rotateZ(0deg);
+            }
+        }
+
+        .gift-body {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #FF4500, #FF6347);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: inset 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Pseudo-elements for 3D sides would be complex, simplifying to CSS cube illusion or just 2D front for reliability in simple HTML/CSS mix or ensuring full 3D cube */
+        .gift-body {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: #D32F2F;
+            transform: translateZ(-50px);
+        }
+
+        .gift-box::before,
+        .gift-box::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: rgba(255, 255, 255, 0.2);
-            transform: rotate(45deg);
+            width: 100px;
+            height: 100px;
+            background-color: #E53935;
+        }
+
+        .gift-box::before {
+            transform: rotateY(90deg) translateZ(50px);
+        }
+
+        .gift-box::after {
+            transform: rotateX(90deg) translateZ(50px);
+            background: #C62828;
+        }
+
+        /* Top/Bottom illusion */
+
+        /* Actual 3D Cube Construction */
+        .gift-box {
+            width: 100px;
+            height: 100px;
+            margin-top: 70px;
+            /* More space from text */
+            margin-left: auto;
+            margin-right: auto;
+            /* Center in container */
+            transform-style: preserve-3d;
+        }
+
+        .gift-body,
+        .gift-lid {
+            /* Resetting simplified above to full 3D below */
+            display: none;
+        }
+
+        /* RE-DEFINING PROPER 3D CUBE FOR GIFT */
+        .gift-cube {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transform-style: preserve-3d;
+        }
+
+        .face {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #D4AF37, #B8860B);
+            /* Gold Gift */
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .face-front {
+            transform: rotateY(0deg) translateZ(50px);
+        }
+
+        .face-back {
+            transform: rotateY(180deg) translateZ(50px);
+        }
+
+        .face-right {
+            transform: rotateY(90deg) translateZ(50px);
+        }
+
+        .face-left {
+            transform: rotateY(-90deg) translateZ(50px);
+        }
+
+        .face-top {
+            transform: rotateX(90deg) translateZ(50px);
+            background: #FFD700;
+            transform-origin: top;
+            transition: transform 0.5s;
+        }
+
+        .face-bottom {
+            transform: rotateX(-90deg) translateZ(50px);
+        }
+
+        /* Ribbon */
+        .face::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 40px;
+            width: 20px;
+            height: 100%;
+            background: #FF4500;
+        }
+
+        .face-top::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 0;
+            width: 100%;
+            height: 20px;
+            background: #FF4500;
+        }
+
+        /* Lid Animation */
+        .gift-container.open .face-top {
+            transform: rotateX(90deg) translateZ(50px) rotateX(-120deg);
+        }
+
+        .gift-container.open .coin-reward {
+            opacity: 1;
+            transform: translate(-50%, -200px) scale(1.5);
+            /* Pop higher and larger */
+            z-index: 10;
+            text-shadow: 0 0 20px rgba(255, 215, 0, 1);
+        }
+
+        .coin-reward {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 2.5rem;
+            /* Larger font */
+            color: #FFD700;
+            font-weight: 800;
+            opacity: 0;
+            transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+            /* Bouncy pop */
+            transition-delay: 0.2s;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.8);
+            white-space: nowrap;
+            pointer-events: none;
         }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class="logo">My Profile</div>
+        <div class="logo">
+            The Takeout
+            <div class="logo-smile"></div>
+        </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
             <li><a href="menu.html">Menu</a></li>
-            <li><a href="admin.html">Admin</a></li>
+            <li><a href="booking.html">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="profile.html" class="active">My Profile</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="admin.html">Admin Login</a></li>
         </ul>
     </nav>
 
-    <section>
-        <div class="wallet-card">
-            <h2>The Takeout Wallet</h2>
-            <div style="font-size: 3rem; font-weight: bold; margin: 1rem 0;">
-                <span id="wallet-balance">0</span> 🪙
-            </div>
-            <p>Takeout Coins</p>
+    <div class="profile-container">
+        <div class="ambient-glow"></div>
 
-            <div style="background: white; padding: 1rem; margin-top: 1rem; border-radius: 10px;">
-                <div id="qr-code" style="font-family: monospace; word-break: break-all;">
-                    QR_CODE_PLACEHOLDER
+        <div class="glass-panel-obsidian" id="wallet-card-3d">
+            <div class="cinematic-title">My Wallet</div>
+
+            <div class="balance-wrapper">
+                <span class="text-liquid-gold" id="wallet-balance" data-text="0">0</span>
+                <div class="coin-label">Takeout Coins</div>
+            </div>
+
+            <div class="scan-section">
+                <div class="text-neon-cyber" id="qr-code">
+                    [ 8020b5db-da6a-4465-804e ]
                 </div>
-                <small>Scan this at counter to redeem</small>
+                <small
+                    style="color: rgba(0, 243, 255, 0.6); font-family: 'Courier New', monospace; font-size: 0.75rem; letter-spacing: 1px;">
+                    SECURE ID: <span id="scan-id">8X-99-ALPHA</span>
+                </small>
             </div>
         </div>
 
-        <div style="text-align:center; margin-top:2rem;">
-            <button onclick="simulateBill()" class="cta-button">Simulate Bill Payment (Demo)</button>
-            <br><br>
-            <a href="index.html" class="cta-button" style="background:transparent; border:1px solid white;">← Back to
-                Home</a>
+        <div class="action-buttons">
+            <button onclick="simulateBill()" class="cta-button-3d">Simulate Payment (Demo)</button>
+            <a href="index.html" class="back-link-3d">← Back to Home</a>
         </div>
+    </div>
 
-        <!-- Scratch Card Modal -->
-        <div id="scratch-modal" class="modal">
-            <div class="modal-content" style="text-align:center;">
-                <span class="close"
-                    onclick="document.getElementById('scratch-modal').style.display='none'">&times;</span>
-                <h3>🎉 Payment Successful!</h3>
-                <p>You earned a scratch card!</p>
-                <div style="background:gray; width:200px; height:100px; margin:auto; display:flex; align-items:center; justify-content:center; cursor:pointer;"
-                    onclick="revealReward(this)">
-                    <span style="color:white; font-size:1.5rem;">Click to Scratch</span>
+    <!-- Scratch Card Modal -->
+    <div id="scratch-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="document.getElementById('scratch-modal').style.display='none'">&times;</span>
+            <h3 style="color: #FFD700; margin-bottom: 2rem;">Payment Successful!</h3>
+            <p style="color: #ccc; margin-bottom: 3rem;">You earned a scratch card reward!</p>
+
+            <!-- 3D Gift Box Animation -->
+            <div class="gift-container" onclick="openGift(this)">
+                <div class="gift-box"> <!-- Used as wrapper for bounce -->
+                    <div class="gift-cube">
+                        <div class="face face-front"></div>
+                        <div class="face face-back"></div>
+                        <div class="face face-right"></div>
+                        <div class="face face-left"></div>
+                        <div class="face face-top"></div>
+                        <div class="face face-bottom"></div>
+                        <div class="coin-reward" id="reward-text">?</div>
+                    </div>
                 </div>
+                <div class="click-hint" style="text-align:center; margin-top: 30px; color: #aaa; font-size: 0.9rem;">
+                    Click to Open!</div>
             </div>
         </div>
-    </section>
+    </div>
 
     <script src="app.js"></script>
     <script>
+        // Enhanced 3D Tilt Effect
+        const card = document.getElementById('wallet-card-3d');
+        const container = document.querySelector('.profile-container');
+
+        if (card && container) {
+            container.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Calculate rotation based on cursor position relative to card center
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                const rotateX = ((y - centerY) / centerY) * -15; // Max 15 degree tilt
+                const rotateY = ((x - centerX) / centerX) * 15;
+
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.02)`;
+            });
+
+            container.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+            });
+        }
+
         async function simulateBill() {
-            // Demo function to simulate paying a bill and getting a reward
             document.getElementById('scratch-modal').style.display = 'flex';
         }
 
-        async function revealReward(el) {
-            const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) return alert("Please Login First");
+        async function openGift(container) {
+            if (container.classList.contains('open')) return;
 
-            const res = await fetch(`${API_BASE}/wallet/generate-reward`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ userId: user.id })
-            });
+            // Trigger animation
+            container.classList.add('open');
+            document.querySelector('.click-hint').innerText = "Opening...";
 
-            if (res.ok) {
-                const data = await res.json();
-                el.style.background = 'var(--accent-color)';
-                el.innerHTML = `<span style="color:black; font-weight:bold;">Won ${data.coins} Coins!</span>`;
-                loadWallet(); // Refresh balance
-            }
+            setTimeout(async () => {
+                const user = JSON.parse(localStorage.getItem('user'));
+                // Demo logic for coins
+                const coins = Math.floor(Math.random() * 50) + 10;
+
+                const rewardText = document.getElementById('reward-text');
+                rewardText.innerHTML = `+${coins}`;
+
+                // Update Balance
+                const balEl = document.getElementById('wallet-balance');
+                let currentBal = parseInt(balEl.innerText) || 0;
+                balEl.innerText = currentBal + coins;
+                balEl.setAttribute('data-text', currentBal + coins);
+
+                document.querySelector('.click-hint').innerText = "Reward Claimed!";
+                document.querySelector('.click-hint').style.color = "#FFD700";
+            }, 800);
         }
     </script>
-    <a href="index.html"
-        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
-        Back to Home</a>
+
 </body>
 
 </html>

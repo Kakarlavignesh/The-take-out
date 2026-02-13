@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Department Portal - The Takeout</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
     <style>
         table {
             width: 100%;
@@ -32,7 +32,10 @@
 
 <body>
     <nav class="navbar">
-        <div class="logo">Department Portal</div>
+        <div class="logo">
+            <!-- Image removed as per user request -->
+            The Takeout
+        </div>
         <ul class="nav-links">
             <li><a href="index.html">Main Site</a></li>
             <li><a href="#" onclick="logout()">Logout</a></li>
@@ -40,31 +43,137 @@
     </nav>
 
     <section id="auth-section">
-        <div style="max-width:400px; margin:auto; text-align:center;">
-            <h3>Department Head Login</h3>
-            <input type="password" id="admin-secret" placeholder="Enter Department Head Secret Code"
-                onkeyup="checkAdminCode()" style="padding:10px; width:100%; margin:1rem 0;">
-            <button onclick="accessAdmin()" class="cta-button">Access Salaries</button>
-            <div style="text-align:center; margin-top:1rem;">
-                <a href="index.html" style="color:#aaa;">← Back to Home</a>
+        <div class="login-wrapper">
+            <div class="login-container-neon" style="height: 400px;">
+
+                <!-- Left Side: Info -->
+                <div class="login-info">
+                    <h2>Dept. Portal</h2>
+                    <p>Authorized Personnel Only</p>
+                    <div style="margin-top: 2rem;">
+                        <a href="index.html"
+                            style="color: #fff; text-decoration: none; font-size: 0.9rem; opacity: 0.7;">← Back to
+                            Home</a>
+                    </div>
+                </div>
+
+                <!-- Right Side: Form -->
+                <div class="login-form-section">
+                    <h3 style="color:var(--accent-color); margin-bottom:1rem; text-align:center;">Enter Secret Code</h3>
+                    <div class="input-box">
+                        <input type="password" id="admin-secret" onkeyup="checkAdminCode()" required placeholder=" ">
+                        <label>Secret Code</label>
+                    </div>
+
+                    <button onclick="accessAdmin()" class="login-btn-neon">Access Dashboard</button>
+                </div>
             </div>
         </div>
     </section>
 
-    <section id="dashboard" style="display:none;">
-        <h2>Employee Salaries & Performance</h2>
-        <div style="overflow-x:auto;">
-            <tbody id="salary-table">
-                <!-- Loaded via JS -->
-            </tbody>
+    <section id="dashboard" style="display:none;" class="admin-dashboard-section">
+        <div class="admin-header">
+            <h2>Admin Dashboard</h2>
+            <div class="admin-actions">
+                <span id="admin-time">Checking time...</span>
+                <button onclick="logout()" class="logout-btn">Logout</button>
+            </div>
+        </div>
+
+        <div class="admin-grid">
+            <!-- 1. OVERVIEW (Stats) -->
+            <div class="admin-card card-overview">
+                <h3>Overview</h3>
+                <div class="stat-grid">
+                    <div class="stat-item">
+                        <span class="stat-label">Orders</span>
+                        <span class="stat-value">124</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Revenue</span>
+                        <span class="stat-value">$4,250</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 2. ACTIVE ORDERS (Kitchen) -->
+            <div class="admin-card card-orders">
+                <div class="card-header">
+                    <h3>Live Orders</h3>
+                    <span class="badge">12 Active</span>
+                </div>
+                <ul class="dense-list" id="active-orders-list">
+                    <li>Loading orders...</li>
+                </ul>
+            </div>
+
+            <!-- 3. RESERVATIONS -->
+            <div class="admin-card card-bookings">
+                <h3>Reservations</h3>
+                <ul class="dense-list" id="bookings-list">
+                    <li>Table 4 - 7:00 PM (Smith)</li>
+                    <li>Table 2 - 7:30 PM (Doe)</li>
+                </ul>
+            </div>
+
+            <!-- 4. STAFF (Existing Table Refactored) -->
+            <div class="admin-card card-staff">
+                <h3>Staff & Performance</h3>
+                <div class="table-compact-wrapper">
+                    <table class="compact-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Perf</th>
+                            </tr>
+                        </thead>
+                        <tbody id="salary-table-body">
+                            <!-- Loaded via JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- 5. USERS (CRM) -->
+            <div class="admin-card card-users">
+                <h3>Recent Users</h3>
+                <ul class="dense-list">
+                    <li>John D. (Gold)</li>
+                    <li>Sarah M. (Silver)</li>
+                </ul>
+            </div>
+
+            <!-- 6. MENU (Quick Toggles) -->
+            <div class="admin-card card-menu">
+                <h3>Menu Status</h3>
+                <div class="toggle-list">
+                    <div class="toggle-item">
+                        <span>Kitchen Open</span>
+                        <div class="status-indicator active"></div>
+                    </div>
+                    <div class="toggle-item">
+                        <span>Breakfast</span>
+                        <div class="status-indicator inactive"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 7. FEEDBACK -->
+            <div class="admin-card card-feedback">
+                <h3>Feedback</h3>
+                <div class="feedback-mini">"Great food!" - ⭐⭐⭐⭐⭐</div>
+                <div class="feedback-mini">"Slow service" - ⭐⭐</div>
+            </div>
         </div>
     </section>
 
     <script src="app.js"></script>
     <script>
         async function accessAdmin() {
-            const code = document.getElementById('secret-code').value;
-            const res = await fetch('/api/employees/salaries', {
+            const code = document.getElementById('admin-secret').value;
+            // Use API_BASE from app.js to ensure correct URL
+            const res = await fetch(`${API_BASE}/employees/salaries`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ secretCode: code })
@@ -81,40 +190,22 @@
         }
 
         function renderTable(employees) {
-            const html = `
-                <table>
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Name</th>
-                            <th>Role</th>
-                            <th>Salary</th>
-                            <th>Performance</th>
-                            <th>Good Feedbacks</th>
-                            <th>Attendance</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${employees.map(e => `
-                            <tr>
-                                <td>${e.id}</td>
-                                <td>${e.name}</td>
-                                <td>${e.role}</td>
-                                <td>$${e.salary.toFixed(2)}</td>
-                                <td>${e.performanceRating}</td>
-                                <td>${e.goodStandingCount}</td>
-                                <td>${e.daysPresent || 0} Days</td>
-                            </tr>
-                        `).join('')}
-                    </tbody>
-                </table>
-            `;
-            document.getElementById('salary-table').innerHTML = html;
+            const html = employees.map(e => `
+                <tr>
+                    <td>${e.name}</td>
+                    <td>${e.role}</td>
+                    <td>${e.performanceRating}</td>
+                </tr>
+            `).join('');
+            document.getElementById('salary-table-body').innerHTML = html;
         }
+
+        // Update time
+        setInterval(() => {
+            document.getElementById('admin-time').innerText = new Date().toLocaleTimeString();
+        }, 1000);
     </script>
-    <a href="index.html"
-        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
-        Back to Home</a>
+
 </body>
 
 </html>

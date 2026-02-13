@@ -4,111 +4,112 @@
 <head>
     <meta charset="UTF-8">
     <title>Login - The Takeout</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css?v=3">
     <style>
-        .login-container {
-            max-width: 400px;
-            margin: 5rem auto;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--glass-border);
-            text-align: center;
-        }
-
-        .login-tabs {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 2rem;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .login-tab {
-            padding: 10px;
-            cursor: pointer;
-            opacity: 0.7;
-        }
-
-        .login-tab.active {
-            opacity: 1;
-            border-bottom: 2px solid var(--accent-color);
-            color: var(--accent-color);
-        }
-
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 1rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
-        }
-
-        .back-link {
-            display: block;
-            margin-top: 1rem;
-            color: #aaa;
-            text-decoration: none;
-        }
+        /* Override specifically for login page if needed */
     </style>
 </head>
 
 <body>
-    <div class="login-container">
-        <h2 style="color:var(--accent-color); margin-bottom:1rem;">Welcome Back</h2>
+    <div class="login-wrapper">
+        <div class="login-container-neon">
 
-        <div class="login-tabs">
-            <div class="login-tab active" onclick="showForm('user')">User Login</div>
-            <div class="login-tab" onclick="showForm('staff')">Staff Login</div>
-        </div>
-
-        <!-- User Form -->
-        <form id="user-form" onsubmit="handleUserLogin(event)">
-            <input type="text" id="user-mobile" placeholder="Mobile Number" required>
-            <div id="otp-section" style="display:none;">
-                <input type="text" id="user-otp" placeholder="Enter OTP (Try: 1234)">
+            <!-- Left Side: Info/Welcome -->
+            <div class="login-info">
+                <h2>Welcome Back!</h2>
+                <p>We're delighted to have you here.</p>
+                <div style="margin-top: 2rem;">
+                    <p style="font-size: 0.9rem; opacity: 0.8;">Don't have an account?</p>
+                    <a href="signup.html"
+                        style="color: var(--accent-color); text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--accent-color); padding-bottom: 2px;">Register
+                        Staff</a>
+                </div>
+                <div style="margin-top: 1rem;">
+                    <a href="index.html" style="color: #fff; text-decoration: none; font-size: 0.9rem; opacity: 0.7;">←
+                        Back to Home</a>
+                </div>
             </div>
-            <button type="button" id="send-otp-btn" class="cta-button" style="width:100%" onclick="sendLoginOtp()">Send
-                OTP</button>
-            <button type="submit" id="login-btn" class="cta-button" style="width:100%; display:none;">Login</button>
-        </form>
 
-        <!-- Staff Form -->
-        <form id="staff-form" style="display:none;" onsubmit="handleStaffLogin(event)">
-            <input type="text" id="staff-id" placeholder="Employee ID (8 Digits)" required>
-            <input type="password" id="staff-pass" placeholder="Password (Same as ID if generic)" required>
-            <button type="submit" class="cta-button" style="width:100%">Staff Login</button>
-        </form>
+            <!-- Right Side: Forms -->
+            <div class="login-form-section">
 
-        <!-- Admin Form -->
-        <form id="admin-form" style="display:none;" onsubmit="handleStaffLogin(event)">
-            <input type="text" id="admin-id" placeholder="Admin ID" required>
-            <input type="password" id="admin-pass" placeholder="Password" required>
-            <button type="submit" class="cta-button" style="width:100%">Admin Login</button>
-        </form>
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" onclick="showForm('user')">User</button>
+                    <button class="auth-tab-btn" onclick="showForm('staff')">Staff</button>
+                    <button class="auth-tab-btn" onclick="showForm('admin')">Admin</button>
+                </div>
 
-        <!-- Registration Removed -->
-        <a href="index.html" class="back-link">← Back to Home</a>
+                <!-- User Form -->
+                <form id="user-form" onsubmit="handleUserLogin(event)" autocomplete="off">
+                    <div class="input-box">
+                        <input type="text" id="user-mobile" required placeholder=" ">
+                        <label>Mobile Number</label>
+                    </div>
+
+                    <div id="otp-section" style="display:none;">
+                        <div class="input-box">
+                            <input type="text" id="user-otp" placeholder=" ">
+                            <label>Enter OTP (Try: 1234)</label>
+                        </div>
+                    </div>
+
+                    <button type="button" id="send-otp-btn" class="login-btn-neon" onclick="sendLoginOtp()">Send
+                        OTP</button>
+                    <button type="submit" id="login-btn" class="login-btn-neon" style="display:none;">Login</button>
+                </form>
+
+                <!-- Staff Form -->
+                <form id="staff-form" style="display:none;" onsubmit="handleStaffLogin(event)" autocomplete="off">
+                    <div class="input-box">
+                        <input type="text" id="staff-id" required placeholder=" ">
+                        <label>Employee ID (8 Digits)</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="staff-pass" required placeholder=" ">
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Staff Login</button>
+                </form>
+
+                <!-- Admin Form -->
+                <form id="admin-form" style="display:none;" onsubmit="handleStaffLogin(event)" autocomplete="off">
+                    <div class="input-box">
+                        <input type="text" id="admin-id" required placeholder=" ">
+                        <label>Admin ID</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="admin-pass" required placeholder=" ">
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Admin Login</button>
+                </form>
+
+            </div>
+        </div>
     </div>
 
     <script src="app.js"></script>
     <script>
         function showForm(type) {
-            document.querySelectorAll('.login-tab').forEach(t => t.classList.remove('active'));
+            // Remove active class from all tabs
+            document.querySelectorAll('.auth-tab-btn').forEach(t => t.classList.remove('active'));
+
+            // Hide all forms
             document.getElementById('user-form').style.display = 'none';
             document.getElementById('staff-form').style.display = 'none';
             document.getElementById('admin-form').style.display = 'none';
 
+            // Show selected
             if (type === 'user') {
                 document.getElementById('user-form').style.display = 'block';
-                document.querySelector('.login-tabs div:nth-child(1)').classList.add('active');
+                document.querySelectorAll('.auth-tab-btn')[0].classList.add('active');
             } else if (type === 'staff') {
                 document.getElementById('staff-form').style.display = 'block';
-                document.querySelector('.login-tabs div:nth-child(2)').classList.add('active');
+                document.querySelectorAll('.auth-tab-btn')[1].classList.add('active');
             } else if (type === 'admin') {
                 document.getElementById('admin-form').style.display = 'block';
-                document.querySelector('.login-tabs div:nth-child(3)').classList.add('active');
+                document.querySelectorAll('.auth-tab-btn')[2].classList.add('active');
             }
         }
     </script>

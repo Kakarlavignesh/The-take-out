@@ -3,6 +3,7 @@ package com.takeout.config;
 import com.takeout.model.Employee;
 import com.takeout.model.MenuItem;
 import com.takeout.repository.EmployeeRepository;
+import com.takeout.repository.FeedbackRepository;
 import com.takeout.repository.MenuItemRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
@@ -16,10 +17,12 @@ import java.util.Random;
 public class DataInitializer {
 
     @Bean
-    CommandLineRunner initData(MenuItemRepository menuRepo, EmployeeRepository empRepo) {
+    CommandLineRunner initData(MenuItemRepository menuRepo, EmployeeRepository empRepo,
+            FeedbackRepository feedbackRepo) {
         return args -> {
+            System.out.println("🚀 [DataInitializer] Starting Data Seeding...");
+
             // Seed Menu
-            // Always clear old menu to ensure updates apply (for dev/demo purpose)
             menuRepo.deleteAll();
 
             if (menuRepo.count() == 0) {
@@ -57,12 +60,15 @@ public class DataInitializer {
                     else if (name.contains("Toast"))
                         img = "images/breakfast_toast.jpg";
 
-                    items.add(createItem(name, "Delicious breakfast item", rand.nextInt(100) + 1,
+                    // Generate round price between 50 and 300 (multiples of 10)
+                    // (rand.nextInt(26) * 10) gives 0..250. + 50 gives 50..300.
+                    double price = (rand.nextInt(26) * 10) + 50;
+
+                    items.add(createItem(name, "Delicious breakfast item", price,
                             MenuItem.Category.BREAKFAST, img));
                 }
 
-                // LUNCH (20) - Note: Curd Rice appeared in Breakfast too, keeping it based on
-                // user list
+                // LUNCH (20)
                 String[] lunchItems = {
                         "Veg Thali", "Chicken Biryani", "Rajma Chawal", "Veg Pulao", "Fish Curry + Rice",
                         "Paneer Butter Masala + Naan", "Dal Tadka + Rice", "Lemon Rice", "Chicken Curry + Rice",
@@ -83,7 +89,8 @@ public class DataInitializer {
                             || name.contains("Chole"))
                         img = "images/lunch_curry.jpg";
 
-                    items.add(createItem(name, "Hearty lunch meal", rand.nextInt(100) + 1, MenuItem.Category.LUNCH,
+                    double price = (rand.nextInt(26) * 10) + 50;
+                    items.add(createItem(name, "Hearty lunch meal", price, MenuItem.Category.LUNCH,
                             img));
                 }
 
@@ -99,23 +106,41 @@ public class DataInitializer {
 
                     if (name.contains("Samosa") || name.contains("Puff"))
                         img = "images/snacks_samosa.jpg";
-                    else if (name.contains("Cutlet") || name.contains("Pakora") || name.contains("Vada"))
-                        img = "images/snacks_fried.jpg";
-                    else if (name.contains("Puri") || name.contains("Chaat"))
-                        img = "images/snacks_chaat.jpg";
-                    else if (name.contains("Sandwich") || name.contains("Burger"))
+                    else if (name.contains("Cutlet"))
+                        img = "images/snacks_cutlet.jpg";
+                    else if (name.contains("Pakora"))
+                        img = "images/snacks_pakora.jpg";
+                    else if (name.contains("Vada"))
+                        img = "images/snacks_vada_pav.jpg";
+                    else if (name.contains("Pani Puri"))
+                        img = "images/snacks_pani_puri.jpg";
+                    else if (name.contains("Bhel Puri") || name.contains("Chaat"))
+                        img = "images/snacks_bhel_puri.jpg";
+                    else if (name.contains("Sandwich"))
+                        img = "images/snacks_sandwich.jpg";
+                    else if (name.contains("Burger"))
                         img = "images/snacks_burger.jpg";
-                    else if (name.contains("Fries") || name.contains("Chips") || name.contains("Popcorn")
-                            || name.contains("Makhana"))
-                        img = "images/snacks_light.jpg";
+                    else if (name.contains("Fries"))
+                        img = "images/snacks_chips.jpg";
+                    else if (name.contains("Popcorn"))
+                        img = "images/snacks_popcorn.jpg";
+                    else if (name.contains("Chips"))
+                        img = "images/snacks_chips.jpg";
+                    else if (name.contains("Makhana"))
+                        img = "images/snacks_makhana.jpg";
                     else if (name.contains("Spring Rolls"))
                         img = "images/snacks_rolls.jpg";
                     else if (name.contains("Tikka"))
                         img = "images/snacks_tikka.jpg";
-                    else if (name.contains("Milkshake") || name.contains("Brownies") || name.contains("Biscuits"))
+                    else if (name.contains("Milkshake"))
+                        img = "images/snacks_milkshake.jpg";
+                    else if (name.contains("Brownies"))
+                        img = "images/snacks_brownie.jpg";
+                    else if (name.contains("Biscuits"))
                         img = "images/snacks_dessert.jpg";
 
-                    items.add(createItem(name, "Tasty snack", rand.nextInt(100) + 1, MenuItem.Category.SNACK,
+                    double price = (rand.nextInt(16) * 10) + 20; // Snacks cheaper: 20-170
+                    items.add(createItem(name, "Tasty snack", price, MenuItem.Category.SNACK,
                             img));
                 }
 
@@ -142,37 +167,62 @@ public class DataInitializer {
                     else if (name.contains("Rice") || name.contains("Biryani"))
                         img = "images/lunch_rice.jpg";
 
-                    items.add(createItem(name, "Exquisite dinner", rand.nextInt(100) + 1, MenuItem.Category.DINNER,
+                    double price = (rand.nextInt(26) * 10) + 50;
+                    items.add(createItem(name, "Exquisite dinner", price, MenuItem.Category.DINNER,
                             img));
                 }
 
                 menuRepo.saveAll(items);
             }
 
-            // Seed Employees
-            if (empRepo.count() == 0) {
-                Employee e1 = new Employee();
-                e1.setId("12345678");
-                e1.setName("John Doe");
-                e1.setRole("Server");
-                e1.setDepartment("Service");
-                e1.setSalary(15000.0);
-                e1.setPerformanceRating(5.0);
-                e1.setGoodStandingCount(0);
-                e1.setDaysPresent(0);
-                e1.setPassword("password");
+            // Seed Employees - ALWAYS WIPE AND RE-SEED
+            feedbackRepo.deleteAll(); // Fix FK constraint
+            empRepo.deleteAll();
+            List<Employee> employees = new ArrayList<>();
 
-                Employee head = new Employee();
-                head.setId("87654321");
-                head.setName("Jane Manager");
-                head.setRole("Head");
-                head.setDepartment("Management");
-                head.setSalary(45000.0);
-                head.setPerformanceRating(9.0);
-                head.setPassword("SECRET"); // In real app, hash this
+            // Option 1: Numeric (Original)
+            Employee e1 = new Employee();
+            e1.setId("12345678");
+            e1.setName("John Doe");
+            e1.setRole("Server");
+            e1.setDepartment("Service");
+            e1.setSalary(15000.0);
+            e1.setPerformanceRating(5.0);
+            e1.setGoodStandingCount(0);
+            e1.setDaysPresent(0);
+            e1.setPassword("password");
+            employees.add(e1);
 
-                empRepo.saveAll(List.of(e1, head));
-            }
+            Employee head1 = new Employee();
+            head1.setId("87654321");
+            head1.setName("Jane Manager");
+            head1.setRole("Head"); // Admin privilege
+            head1.setDepartment("Management");
+            head1.setSalary(45000.0);
+            head1.setPerformanceRating(9.0);
+            head1.setPassword("SECRET");
+            employees.add(head1);
+
+            // Option 2: Alphanumeric (Easier to remember)
+            Employee e2 = new Employee();
+            e2.setId("staff01");
+            e2.setName("Demo Staff");
+            e2.setRole("Server");
+            e2.setDepartment("Service");
+            e2.setSalary(15000.0);
+            e2.setPassword("staff123");
+            employees.add(e2);
+
+            Employee head2 = new Employee();
+            head2.setId("admin01");
+            head2.setName("Demo Admin");
+            head2.setRole("Head"); // Ensure role matches Admin logic
+            head2.setDepartment("Management");
+            head2.setSalary(45000.0);
+            head2.setPassword("admin123");
+            employees.add(head2);
+
+            empRepo.saveAll(employees);
         };
     }
 

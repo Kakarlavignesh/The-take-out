@@ -32,10 +32,14 @@ public class TheTakeoutApplication {
         System.out.println("   PLEASE WAIT FOR 'STARTED' MESSAGE    ");
         System.out.println("----------------------------------------");
         SpringApplication.run(TheTakeoutApplication.class, args);
-        System.out.println("----------------------------------------");
-        System.out.println("   SERVER IS RUNNING ON PORT 9091       ");
-        System.out.println("   OPEN BROWSER: http://localhost:9091  ");
-        System.out.println("----------------------------------------");
+        System.out.println("\n\n");
+        System.out.println("==================================================================================");
+        System.out.println("   THE TAKEOUT SERVER IS RUNNING!");
+        System.out.println("==================================================================================");
+        System.out.println("   ACCESS YOUR WEBSITE HERE:");
+        System.out.println("   👉  http://localhost:9091");
+        System.out.println("==================================================================================");
+        System.out.println("\n\n");
     }
 
 }

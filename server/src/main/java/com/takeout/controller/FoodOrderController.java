@@ -21,7 +21,7 @@ public class FoodOrderController {
 
     @PostMapping
     public FoodOrder createOrder(@RequestBody FoodOrder order) {
-        order.setStatus("Received");
+        order.setStatus("PENDING");
         return orderRepository.save(order);
     }
 }

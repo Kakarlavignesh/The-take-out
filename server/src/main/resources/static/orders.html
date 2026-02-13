@@ -5,13 +5,331 @@
     <meta charset="UTF-8">
     <title>My Orders - The Takeout</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --champagne-gold: #f7e7ce;
+            --liquid-gold: linear-gradient(135deg, #d4af37 0%, #f7e7ce 50%, #d4af37 100%);
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: var(--font-body);
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), url('images/ultra_luxury_booking_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            background: rgba(0, 0, 0, 0.4) !important;
+            backdrop-filter: blur(10px);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+            border: none !important;
+            /* Explicitly remove the thin line */
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            color: #fff;
+            margin: 0;
+            text-decoration: none;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            font-weight: 800;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+
+        .home-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-left: 6rem;
+        }
+
+        .home-btn:hover {
+            background: #FF8C00;
+            /* Vivid Yellow */
+            color: #000;
+            border-color: #FF8C00;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
+            transform: translateY(-2px);
+        }
+
+        .back-icon {
+            stroke-width: 3px;
+            width: 18px;
+            height: 18px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 1.2rem;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-links li a {
+            color: #fff !important;
+            text-decoration: none;
+            padding: 0.7rem 1.4rem;
+            border-radius: 30px;
+            border: 2.5px solid #ffffff !important;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-links li a:hover {
+            background: #FF8C00;
+            color: #000;
+            border-color: #FF8C00;
+        }
+
+        .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FF8C00;
+            border-color: #FF8C00;
+        }
+
+        .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FF8C00;
+            border-color: #FF8C00;
+        }
+
+        .orders-page-wrapper {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 100px 20px 0;
+            /* Precisely balanced for the fixed navbar */
+            box-sizing: border-box;
+            perspective: 2000px;
+        }
+
+        .mouse-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0.02) 40%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 1;
+            transition: transform 0.1s ease-out;
+            mix-blend-mode: screen;
+        }
+
+        .orders-container {
+            width: 100%;
+            max-width: 800px;
+            z-index: 2;
+            overflow-y: auto;
+            max-height: 60vh;
+            /* Reduced height for better vertical centering */
+            padding-right: 15px;
+            margin-top: 1rem;
+        }
+
+        .orders-container::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .orders-container::-webkit-scrollbar-thumb {
+            background: var(--accent-color);
+            border-radius: 10px;
+        }
+
+        .orders-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .orders-title {
+            font-family: var(--font-heading);
+            font-size: 3.5rem;
+            color: var(--champagne-gold);
+            margin-bottom: 0.5rem;
+            text-shadow: 0 4px 20px rgba(247, 231, 206, 0.2);
+        }
+
+        .orders-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 5px;
+            text-transform: uppercase;
+        }
+
+        .order-box {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            border-radius: 20px;
+            margin-bottom: 2rem;
+            display: grid;
+            grid-template-columns: 1fr auto;
+            align-items: center;
+            gap: 2rem;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .order-box:hover {
+            transform: translateY(-5px) scale(1.02);
+            background: rgba(255, 255, 255, 0.05);
+            border-color: var(--accent-color);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.4);
+        }
+
+        .order-info h3 {
+            font-family: var(--font-heading);
+            color: var(--accent-color);
+            font-size: 1.8rem;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .order-info p {
+            color: #ccc;
+            margin: 0.3rem 0;
+            font-size: 1rem;
+        }
+
+        .order-status {
+            display: inline-block;
+            padding: 0.5rem 0;
+            /* Vertical padding only, width handles horizontal */
+            width: 140px;
+            /* Fixed width for perfect centering */
+            background: rgba(212, 175, 55, 0.1);
+            border: 1px solid var(--accent-color);
+            border-radius: 50px;
+            color: var(--accent-color);
+            font-weight: 800;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-align: center;
+            /* Critical for centering text */
+            backdrop-filter: blur(5px);
+        }
+
+        .order-total {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: 800;
+            margin-top: 1rem;
+            display: block;
+        }
+
+        .login-prompt {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(30px);
+            padding: 4rem;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .login-prompt p {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 2rem;
+        }
+
+        .delete-order-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .delete-order-btn:hover {
+            color: #FF8C00;
+            transform: scale(1.2);
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="mouse-glow" id="mouseGlow"></div>
+
     <nav class="navbar">
-        <div class="logo">The Takeout</div>
+        <div class="logo-container">
+            <a href="index.html" class="logo">The Takeout</a>
+            <a href="index.html" class="home-btn">
+                <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Home
+            </a>
+        </div>
         <ul class="nav-links">
-            <!-- Home link removed -->
             <li><a href="menu.html">Menu</a></li>
             <li><a href="booking.html">Book A Table</a></li>
             <li><a href="orders.html" class="active">Orders</a></li>
@@ -20,45 +338,121 @@
         </ul>
     </nav>
 
-    <section>
-        <h2 style="color:var(--accent-color);">Your Orders</h2>
-        <div id="orders-list">
-            <p>Please login to view your orders.</p>
+    <div class="orders-page-wrapper">
+        <div class="orders-header">
+            <h1 class="orders-title">Your Orders</h1>
+            <p class="orders-subtitle">Gourmet Timeline</p>
         </div>
-        <div style="text-align:center; margin-top:1rem;">
-            <a href="index.html" class="cta-button" style="background:transparent; border:1px solid white;">← Back</a>
+
+        <div id="orders-list" class="orders-container">
+            <!-- Orders dynamically loaded here -->
+            <div class="login-prompt">
+                <p>Please login to view your gourmet journey.</p>
+                <a href="index.html" class="home-btn" style="margin-left: 0; display: inline-flex;">Login Now</a>
+            </div>
         </div>
-    </section>
+    </div>
 
     <script src="app.js"></script>
     <script>
+        // Mouse Glow
+        const glow = document.getElementById('mouseGlow');
+        document.addEventListener('mousemove', (e) => {
+            glow.style.left = `${e.clientX}px`;
+            glow.style.top = `${e.clientY}px`;
+        });
+
         async function loadOrders() {
             const user = JSON.parse(localStorage.getItem('user'));
-            if (!user) return;
-
-            const res = await fetch(`/api/orders/user/${user.id}`);
-            const orders = await res.json();
-
             const container = document.getElementById('orders-list');
-            if (orders.length === 0) {
-                container.innerHTML = "<p>No orders found.</p>";
+
+            if (!user) {
+                // Determine if we need to show login prompt
+                // If user is null, we show the login prompt which is default content
                 return;
             }
 
-            container.innerHTML = orders.map(order => `
-                <div style="background:rgba(255,255,255,0.05); padding:1rem; margin-bottom:1rem; border-radius:10px;">
-                    <h3>Order #${order.id}</h3>
-                    <p>Status: <span style="color:var(--accent-color)">${order.status}</span></p>
-                    <p>Items: ${order.itemsSummary || 'N/A'}</p>
-                    <p>Total: $${order.totalPrice}</p>
-                </div>
-            `).join('');
+            // Auto-fix for old sessions without ID
+            if (!user.id) {
+                alert("Session expired. Please login again.");
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Clear the default "Please login" message if user exists
+            container.innerHTML = '<p style="color:white; text-align:center;">Loading your gourmet timeline...</p>';
+
+            try {
+                // Use API_BASE from app.js
+                const res = await fetch(`${API_BASE}/orders/user/${user.id}`);
+                const orders = await res.json();
+
+                if (orders.length === 0) {
+                    container.innerHTML = `
+                        <div class="order-box" style="justify-content: center; text-align: center;">
+                            <div class="order-info">
+                                <h3>No flavors found yet</h3>
+                                <p>Begin your culinary adventure at our menu.</p>
+                                <a href="menu.html" class="home-btn" style="margin-left: 0; margin-top: 1.5rem; display: inline-flex;">Explore Menu</a>
+                            </div>
+                        </div>
+                    `;
+                    return;
+                }
+
+                container.innerHTML = orders.map((order, index) => `
+                    <div class="order-box" id="order-${order.id}" style="animation-delay: ${index * 0.1}s; position: relative;">
+                        <button class="delete-order-btn" onclick="deleteOrder(${order.id})" title="Remove Order">✖</button>
+                        <div class="order-info">
+                            <h3>Order #${order.id}</h3>
+                            <p><strong>Selection:</strong> ${order.itemsSummary || 'Gourmet Selection'}</p>
+                            <span class="order-total">₹${order.totalPrice.toFixed(2)}</span>
+                        </div>
+                        <div style="text-align: right;">
+                            <div class="order-status">${order.status}</div>
+                            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 1rem; font-weight: 700; letter-spacing: 1px;">EST. ARRIVAL: 25 MIN</p>
+                        </div>
+                    </div>
+                `).join('');
+
+                // Always add the "Explore Menu" button at the bottom after the list
+                container.innerHTML += `
+                    <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem;">
+                        <p style="color: rgba(255,255,255,0.4); margin-bottom: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Hungry for more?</p>
+                        <a href="menu.html" class="home-btn" style="margin: 0 auto; display: inline-flex;">Explore Menu</a>
+                    </div>
+                `;
+            } catch (err) {
+                console.error("Error loading orders:", err);
+                container.innerHTML = "<p style='color: white; text-align: center;'>Unable to load your culinary history at this time.</p>";
+            }
         }
+        async function deleteOrder(id) {
+            if (!confirm("Are you sure you want to remove this culinary record?")) return;
+
+            try {
+                // In a real app, you'd call a DELETE API here. 
+                // For now, we remove it from the UI for immediate satisfaction.
+                const orderElement = document.getElementById(`order-${id}`);
+                orderElement.style.transform = "scale(0.8) translateZ(-50px)";
+                orderElement.style.opacity = "0";
+
+                setTimeout(() => {
+                    orderElement.remove();
+                    // If no more orders, show the "No flavors found" message
+                    const container = document.getElementById('orders-list');
+                    if (container.querySelectorAll('.order-box').length === 0) {
+                        loadOrders(); // Refresh to show empty state
+                    }
+                }, 400);
+            } catch (err) {
+                console.error("Delete failed:", err);
+            }
+        }
+
         loadOrders();
     </script>
-    <a href="index.html"
-        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
-        Back to Home</a>
 </body>
 
 </html>

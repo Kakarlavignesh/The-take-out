@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chef Portal - The Takeout</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .kanban-board {
+            display: flex;
+            gap: 2rem;
+            padding: 2rem;
+            overflow-x: auto;
+        }
+
+        .chef-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            min-width: 300px;
+            margin-bottom: 1rem;
+        }
+
+        .badge {
+            background: var(--accent-color);
+            color: black;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 0.8rem;
+        }
+
+        .actions button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            border: 1px solid white;
+        }
+
+        .actions button:hover {
+            background: var(--accent-color);
+            color: black;
+        }
+    </style>
+</head>
+
+<body>
+    <nav class="navbar">
+        <div class="logo">
+            <!-- Image removed as per user request -->
+            The Takeout
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html">Main Site</a></li>
+            <li><a href="#" onclick="logout()" style="color:red;">Logout</a></li>
+        </ul>
+    </nav>
+
+    <section>
+        <h2>Kitchen Orders</h2>
+        <input type="text" id="current-chef-id" placeholder="Enter Your Chef ID"
+            style="padding:10px; background:rgba(255,255,255,0.05); color:white; border:1px solid gray;">
+
+        <div id="chef-orders" class="kanban-board"
+            style="display:grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));">
+            <!-- Orders loaded via JS -->
+            <p>Loading Orders...</p>
+        </div>
+    </section>
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>

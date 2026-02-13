@@ -3,15 +3,319 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Book A Table - The Takeout</title>
+    <title>Reserve Your Spot - The Takeout</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        :root {
+            --champagne-gold: #f7e7ce;
+            --liquid-gold: linear-gradient(135deg, #d4af37 0%, #f7e7ce 50%, #d4af37 100%);
+        }
+
+        body,
+        html {
+            height: 100%;
+            margin: 0;
+            font-family: var(--font-body);
+            overflow: hidden;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('images/ultra_luxury_booking_bg.png');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            /* cursor: none removed - Restore normal cursor */
+        }
+
+        .navbar {
+            background: rgba(0, 0, 0, 0.3) !important;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem 5%;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            /* Grand Master scale for restaurant name */
+            color: #fff;
+            margin: 0;
+            text-decoration: none;
+            letter-spacing: 2px;
+            white-space: nowrap;
+            font-weight: 800;
+            /* Extra bold for master brand authority */
+            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .home-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1.5px solid #ffffff;
+            color: #fff;
+            padding: 0.8rem 1.6rem;
+            /* Matched standard nav padding */
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 1rem;
+            /* Matched standard nav font size */
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-left: 6rem;
+            /* Maintains substantial gap from brand */
+        }
+
+        .home-btn:hover {
+            background: var(--accent-color);
+            color: #000;
+            border-color: var(--accent-color);
+            box-shadow: 0 0 25px rgba(255, 140, 0, 0.5);
+            transform: translateX(-5px);
+        }
+
+        .back-icon {
+            stroke-width: 2.5px;
+            width: 20px;
+            /* Scaled for the larger brand font */
+            height: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .booking-page-wrapper {
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding-top: 80px;
+            /* Space for fixed navbar */
+            box-sizing: border-box;
+            perspective: 1500px;
+            overflow: hidden;
+        }
+
+        /* Mouse Glow Cursor - Keep Background Glow */
+        .mouse-glow {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.15) 0%, rgba(255, 140, 0, 0.05) 30%, transparent 70%);
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            z-index: 999;
+            /* Below interactive elements */
+            transition: transform 0.1s ease-out;
+            mix-blend-mode: screen;
+        }
+
+        /* custom-cursor-dot removed */
+
+        .glass-booking-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2.5rem 3rem;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 420px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.5), inset 0 0 20px rgba(255, 255, 255, 0.02);
+            text-align: center;
+            position: relative;
+            transform-style: preserve-3d;
+            transition: transform 0.1s ease-out;
+            animation: fadeInScale 1.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        /* Reflection on Card */
+        .glass-booking-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, transparent 50%, rgba(255, 255, 255, 0.05) 100%);
+            border-radius: 20px;
+            pointer-events: none;
+        }
+
+        .exclusivity-icon {
+            position: absolute;
+            top: -25px;
+            left: 50%;
+            transform: translateX(-50%) translateZ(40px);
+            width: 50px;
+            height: 50px;
+            background: rgba(10, 14, 26, 0.95);
+            border: 2px solid var(--accent-color);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
+            animation: float 4s ease-in-out infinite;
+        }
+
+        @keyframes float {
+
+            0%,
+            100% {
+                transform: translateX(-50%) translateZ(40px) translateY(0);
+            }
+
+            50% {
+                transform: translateX(-50%) translateZ(40px) translateY(-8px);
+            }
+        }
+
+        .booking-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--champagne-gold);
+            margin-bottom: 0.2rem;
+            text-shadow: 0 0 15px rgba(247, 231, 206, 0.2);
+            transform: translateZ(30px);
+        }
+
+        .booking-subtitle {
+            font-family: var(--font-body);
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            margin-bottom: 2rem;
+            transform: translateZ(20px);
+        }
+
+        .luxury-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+            transform: translateZ(10px);
+        }
+
+        .input-group {
+            position: relative;
+            text-align: left;
+        }
+
+        .luxury-input {
+            width: 100%;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 8px 0;
+            color: #fff;
+            font-size: 1rem;
+            outline: none;
+            transition: all 0.4s ease;
+        }
+
+        .luxury-input:focus {
+            border-bottom-color: var(--accent-color);
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.1);
+        }
+
+        .input-label {
+            display: block;
+            font-size: 0.7rem;
+            color: rgba(255, 255, 255, 0.4);
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .confirm-btn {
+            margin-top: 1rem;
+            background: var(--liquid-gold);
+            border: none;
+            padding: 1rem;
+            border-radius: 50px;
+            font-family: var(--font-body);
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: #000;
+            cursor: pointer;
+            box-shadow: 0 10px 25px rgba(212, 175, 55, 0.25);
+            animation: breathe 3s ease-in-out infinite;
+            transition: all 0.3s ease;
+            transform: translateZ(50px);
+        }
+
+        .confirm-btn:hover {
+            transform: translateZ(60px) translateY(-5px);
+            box-shadow: 0 20px 40px rgba(212, 175, 55, 0.5);
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                box-shadow: 0 8px 25px rgba(212, 175, 55, 0.2);
+            }
+
+            50% {
+                box-shadow: 0 8px 40px rgba(212, 175, 55, 0.5);
+            }
+        }
+
+        @keyframes fadeInScale {
+            from {
+                opacity: 0;
+                transform: translateY(10px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+    </style>
 </head>
 
 <body>
+    <div class="mouse-glow" id="mouseGlow"></div>
+
     <nav class="navbar">
-        <div class="logo">The Takeout</div>
+        <div class="logo-container">
+            <a href="index.html" class="logo">The Takeout</a>
+            <a href="index.html" class="home-btn">
+                <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                Home
+            </a>
+        </div>
         <ul class="nav-links">
-            <!-- Home link removed -->
             <li><a href="menu.html">Menu</a></li>
             <li><a href="booking.html" class="active">Book A Table</a></li>
             <li><a href="orders.html">Orders</a></li>
@@ -20,28 +324,76 @@
         </ul>
     </nav>
 
-    <section>
-        <div style="max-width:500px; margin:auto; background:rgba(255,255,255,0.05); padding:2rem; border-radius:10px;">
-            <h2 style="color:var(--accent-color); margin-bottom:1rem;">Reserve Your Spot</h2>
-            <form onsubmit="bookTable(event)">
-                <input type="text" id="name" placeholder="Your Name"
-                    style="width:100%; padding:10px; margin-bottom:1rem;" required>
-                <input type="date" id="date" style="width:100%; padding:10px; margin-bottom:1rem;" required>
-                <input type="time" id="time" style="width:100%; padding:10px; margin-bottom:1rem;" required>
-                <input type="number" id="guests" placeholder="Number of Guests"
-                    style="width:100%; padding:10px; margin-bottom:1rem;" required>
-                <button type="submit" class="cta-button">Confirm Booking</button>
+    <div class="booking-page-wrapper">
+        <div class="glass-booking-card" id="bookingCard">
+            <div class="exclusivity-icon">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-color)"
+                    stroke-width="2">
+                    <circle cx="12" cy="12" r="10" />
+                    <path d="M12 6v6l4 2" />
+                </svg>
+            </div>
+
+            <h1 class="booking-title">Reserve</h1>
+            <p class="booking-subtitle">Exclusive Table</p>
+
+            <form class="luxury-form" onsubmit="bookTable(event)">
+                <div class="input-group">
+                    <label class="input-label">Full Name</label>
+                    <input type="text" id="name" class="luxury-input" placeholder="Enter your name" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Time</label>
+                    <input type="time" id="time" class="luxury-input" required>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label">Guests</label>
+                    <input type="number" id="guests" class="luxury-input" min="1" max="20"
+                        placeholder="Number of guests" required>
+                </div>
+
+                <button type="submit" class="confirm-btn">Confirm Booking</button>
             </form>
         </div>
-    </section>
+    </div>
 
-    <script src="app.js"></script>
     <script>
+        // Mouse Glow
+        const glow = document.getElementById('mouseGlow');
+        const card = document.getElementById('bookingCard');
+
+        document.addEventListener('mousemove', (e) => {
+            const { clientX: x, clientY: y } = e;
+
+            // Move glow
+            glow.style.left = `${x}px`;
+            glow.style.top = `${y}px`;
+
+            // 3D Tilt Effect
+            const rect = card.getBoundingClientRect();
+            const cardX = x - rect.left;
+            const cardY = y - rect.top;
+            const centerX = rect.width / 2;
+            const centerY = rect.height / 2;
+
+            const rotateX = ((cardY - centerY) / centerY) * 10;
+            const rotateY = ((centerX - cardX) / centerX) * 10;
+
+            card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
+        });
+
+        // Reset Card on Leave
+        document.addEventListener('mouseleave', () => {
+            card.style.transform = `rotateX(0deg) rotateY(0deg)`;
+        });
+
         async function bookTable(e) {
             e.preventDefault();
             const data = {
                 customerName: document.getElementById('name').value,
-                date: document.getElementById('date').value,
+                date: new Date().toISOString().split('T')[0],
                 time: document.getElementById('time').value,
                 numberOfGuests: document.getElementById('guests').value
             };
@@ -52,12 +404,14 @@
                 body: JSON.stringify(data)
             });
 
-            if (res.ok) alert("Table Booked Successfully!");
+            if (res.ok) {
+                alert("Reservation Secured. We await your arrival.");
+            } else {
+                const errorData = await res.json();
+                alert(`Failed to make reservation: ${errorData.message || res.statusText}`);
+            }
         }
     </script>
-    <a href="index.html"
-        style="position:fixed; top:80px; left:20px; z-index:1000; color:black; text-decoration:none; background:var(--accent-color); padding:5px 10px; border-radius:5px; border:1px solid rgba(255,255,255,0.2); font-weight:bold;">←
-        Back to Home</a>
 </body>
 
 </html>

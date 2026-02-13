@@ -22,10 +22,31 @@ public class AuthController {
     @Autowired
     private EmployeeRepository employeeRepository;
 
+    // Simple in-memory OTP storage for demo purposes
+    private static final java.util.concurrent.ConcurrentHashMap<String, String> otpStorage = new java.util.concurrent.ConcurrentHashMap<>();
+
     @PostMapping("/send-otp")
     public ResponseEntity<?> sendOtp(@RequestBody Map<String, String> payload) {
-        // payload.get("mobile"); // Logic to send OTP (Simulated)
-        return ResponseEntity.ok(Map.of("message", "OTP sent", "otp", "1234"));
+        String mobile = payload.get("mobile");
+        if (mobile == null || mobile.isEmpty()) {
+            return ResponseEntity.badRequest().body("Mobile number is required");
+        }
+
+        // Generate Random 6-digit OTP
+        String otp = String.valueOf((int) (Math.random() * 900000) + 100000);
+        otpStorage.put(mobile, otp);
+
+        // Simulate SMS Delivery by logging to server console (hidden from frontend
+        // user)
+        System.out.println("\n---------------------------------------------------");
+        System.out.println(" [SMS GATEWAY SIMULATION] Sending SMS to: " + mobile);
+        System.out.println(" [OTP MESSAGE] Your verification code is: " + otp);
+        System.out.println("---------------------------------------------------\n");
+
+        // Return success WITH the OTP in the response body (For Demo Simulation)
+        return ResponseEntity.ok(Map.of(
+                "message", "OTP sent successfully to mobile number",
+                "otp", otp));
     }
 
     @PostMapping("/customer-login")
@@ -33,7 +54,12 @@ public class AuthController {
         String mobile = payload.get("mobile");
         String otp = payload.get("otp");
 
-        if ("1234".equals(otp)) {
+        String storedOtp = otpStorage.get(mobile);
+
+        if (storedOtp != null && storedOtp.equals(otp)) {
+            // Clear OTP after successful use
+            otpStorage.remove(mobile);
+
             User user = userRepository.findByMobile(mobile)
                     .orElseGet(() -> {
                         User newUser = new User();
@@ -42,7 +68,7 @@ public class AuthController {
                     });
             return ResponseEntity.ok(user);
         }
-        return ResponseEntity.status(401).body("Invalid OTP");
+        return ResponseEntity.status(401).body("Invalid or Expired OTP");
     }
 
     @PostMapping("/staff-login")
@@ -50,9 +76,17 @@ public class AuthController {
         String id = payload.get("id");
         String pass = payload.get("password");
 
+        System.out.println("Login Attempt: ID=" + id); // Debug Log
+
         Optional<Employee> emp = employeeRepository.findById(id);
         if (emp.isPresent() && emp.get().getPassword() != null && emp.get().getPassword().equals(pass)) {
-            return ResponseEntity.ok(emp.get());
+            // Generate Mock JWT Token (UUID for demo)
+            String token = java.util.UUID.randomUUID().toString();
+
+            // Return User + Token
+            return ResponseEntity.ok(Map.of(
+                    "user", emp.get(),
+                    "token", token));
         }
         return ResponseEntity.status(401).body("Invalid Credentials");
     }
@@ -69,5 +103,21 @@ public class AuthController {
         emp.setDaysPresent(0);
 
         return ResponseEntity.ok(employeeRepository.save(emp));
+    }
+
+    @PostMapping("/google-login")
+    public ResponseEntity<?> googleLogin(@RequestBody Map<String, String> payload) {
+        String email = payload.get("email");
+        String name = payload.get("name");
+
+        User user = userRepository.findByEmail(email)
+                .orElseGet(() -> {
+                    User newUser = new User();
+                    newUser.setEmail(email);
+                    newUser.setName(name);
+                    newUser.setGoogleLogin(true);
+                    return userRepository.save(newUser);
+                });
+        return ResponseEntity.ok(user);
     }
 }

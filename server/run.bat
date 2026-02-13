@@ -36,7 +36,7 @@ echo [OK] Maven found.
 :: 3. Run Server
 echo.
 echo Starting Spring Boot Application...
-echo The server will run on http://localhost:9090
+echo The server will run on http://localhost:9091
 echo.
 call mvn spring-boot:run
 

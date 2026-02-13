@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Takeout - Premium Dining Experience</title>
+    <link rel="stylesheet" href="style.css?v=2">
+    <!-- Google Fonts for Premium Look -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body class="homepage">
+    <nav class="navbar">
+        <div class="logo">
+            The Takeout
+            <div class="logo-smile"></div>
+        </div>
+        <ul class="nav-links">
+            <!-- Home link removed -->
+            <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="offers.html">Offers</a></li>
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
+            <li><a href="#"
+                    onclick="document.getElementById('login-modal').style.display='flex'; switchTab('admin')">Admin
+                    Login</a></li>
+        </ul>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <header class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="animate-fade-in">Experience Culinary Excellence</h1>
+            <p class="animate-slide-up">Taste the finest flavors from around the world, crafted with passion.</p>
+            <div class="hero-buttons animate-slide-up" style="animation-delay: 0.2s;">
+                <a href="menu.html" class="cta-button">View Menu</a>
+                <a href="booking.html" class="cta-button">Book Table</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- FEATURES SECTION -->
+    <section class="features-section">
+        <div class="feature-card" onclick="document.getElementById('ingredients').scrollIntoView({behavior: 'smooth'})">
+            <div class="icon">🌿</div>
+            <h3>Fresh Ingredients</h3>
+            <p>Farm-to-table freshness in every bite.</p>
+        </div>
+        <div class="feature-card" onclick="document.getElementById('chefs').scrollIntoView({behavior: 'smooth'})">
+            <div class="icon">👨‍🍳</div>
+            <h3>Master Chefs</h3>
+            <p>Culinary artistry by world-renowned experts.</p>
+        </div>
+        <div class="feature-card" onclick="document.getElementById('ambience').scrollIntoView({behavior: 'smooth'})">
+            <div class="icon">✨</div>
+            <h3>Premium Ambience</h3>
+            <p>Dining reimagined for comfort and style.</p>
+        </div>
+    </section>
+
+    <!-- INGREDIENTS SECTION -->
+    <section id="ingredients" class="ingredients-section">
+        <div class="section-content-wrapper">
+            <h2 class="section-title">Fresh Ingredients</h2>
+            <p class="section-subtitle">Farm-to-table freshness in every bite.</p>
+
+            <div class="ingredients-tabs">
+                <div class="ingredient-card-tab tab-breakfast active" onclick="loadIngredients('breakfast')">
+                    <span>Breakfast</span>
+                </div>
+                <div class="ingredient-card-tab tab-lunch" onclick="loadIngredients('lunch')">
+                    <span>Lunch</span>
+                </div>
+                <div class="ingredient-card-tab tab-snacks" onclick="loadIngredients('snacks')">
+                    <span>Snacks</span>
+                </div>
+                <div class="ingredient-card-tab tab-dinner" onclick="loadIngredients('dinner')">
+                    <span>Dinner</span>
+                </div>
+            </div>
+
+            <div id="ingredients-display" class="ingredients-display">
+                <!-- Dynamic Content Load Here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- MASTER CHEFS SECTION -->
+    <section id="chefs" class="chefs-section">
+        <div class="section-content-wrapper">
+            <h2 class="section-title">Master Chefs</h2>
+            <p class="section-subtitle">Culinary artistry by world-renowned experts.</p>
+
+            <div class="chefs-grid">
+
+                <!-- 1. Marcus -->
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="images/chef_marcus_v2.jpg" alt="Chef Marcus Thorne">
+                    </div>
+                    <div class="chef-details">
+                        <h3 class="chef-name">Marcus Thorne</h3>
+                        <p class="chef-role">Executive Chef</p>
+                        <div class="chef-info-grid">
+                            <div class="chef-info-item">
+                                <h4>Signature Style</h4>
+                                <p>Contemp. Med.</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Experience</h4>
+                                <p>18 Years</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Top Skill</h4>
+                                <p>Menu Innovation</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Rating</h4>
+                                <p>⭐⭐⭐⭐⭐</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2. Elena -->
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="images/chef_elena.jpg" alt="Chef Elena Rodriguez">
+                    </div>
+                    <div class="chef-details">
+                        <h3 class="chef-name">Elena Rodriguez</h3>
+                        <p class="chef-role">Head Pastry Chef</p>
+                        <div class="chef-info-grid">
+                            <div class="chef-info-item">
+                                <h4>Signature Style</h4>
+                                <p>Modern Fusion</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Experience</h4>
+                                <p>12 Years</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Top Skill</h4>
+                                <p>Sugar Art</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Rating</h4>
+                                <p>⭐⭐⭐⭐⭐</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 3. Kenji -->
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="images/chef_kenji.jpg" alt="Chef Kenji Sato">
+                    </div>
+                    <div class="chef-details">
+                        <h3 class="chef-name">Kenji Sato</h3>
+                        <p class="chef-role">Sous Chef</p>
+                        <div class="chef-info-grid">
+                            <div class="chef-info-item">
+                                <h4>Signature Style</h4>
+                                <p>Umami Balance</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Experience</h4>
+                                <p>10 Years</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Top Skill</h4>
+                                <p>Precision Knife</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Rating</h4>
+                                <p>⭐⭐⭐⭐⭐</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 4. Isabella -->
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="images/chef_isabella.jpg" alt="Chef Isabella Rossi">
+                    </div>
+                    <div class="chef-details">
+                        <h3 class="chef-name">Isabella Rossi</h3>
+                        <p class="chef-role">Saucier</p>
+                        <div class="chef-info-grid">
+                            <div class="chef-info-item">
+                                <h4>Signature Style</h4>
+                                <p>Rustic Italian</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Experience</h4>
+                                <p>8 Years</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Top Skill</h4>
+                                <p>Flavor Pairing</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Rating</h4>
+                                <p>⭐⭐⭐⭐⭐</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 5. Vignesh Reddy -->
+                <div class="chef-card">
+                    <div class="chef-image">
+                        <img src="images/chef_vignesh.jpg" alt="Chef VigneshReddy"
+                            style="object-position: 65% top; width: 100%; height: 100%; object-fit: cover;">
+                    </div>
+                    <div class="chef-details">
+                        <h3 class="chef-name">VigneshReddy</h3>
+                        <p class="chef-role">Grill Master</p>
+                        <div class="chef-info-grid">
+                            <div class="chef-info-item">
+                                <h4>Signature Style</h4>
+                                <p>Open Fire</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Experience</h4>
+                                <p>15 Years</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Top Skill</h4>
+                                <p>Dry Aging</p>
+                            </div>
+                            <div class="chef-info-item">
+                                <h4>Rating</h4>
+                                <p>⭐⭐⭐⭐⭐</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- PREMIUM AMBIENCE SECTION -->
+    <section id="ambience" class="ambience-section">
+        <div class="section-content-wrapper">
+            <h2 class="section-title">Premium Ambience</h2>
+            <p class="section-subtitle">Dining reimagined for comfort and style.</p>
+
+            <div class="ambience-grid">
+                <!-- Premium Ambience Gallery (9 New Images) -->
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_storefront_1.jpg" alt="Restaurant Storefront at Night">
+                </div>
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_outdoor.jpg" alt="Outdoor Patio Seating">
+                </div>
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_booths.jpg" alt="Cozy Interior Booths">
+                </div>
+
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_counter.jpg" alt="Service Counter & Menu">
+                </div>
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_community_table.jpg" alt="Long Community Table">
+                </div>
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_kitchen.jpg" alt="Chef Cooking in Kitchen">
+                </div>
+
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_burger.jpg" alt="Premium Burger & Shake">
+                </div>
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_takeout.jpg" alt="Takeout Packaging">
+                </div>
+                <div class="ambience-item" onclick="openLightbox(this)">
+                    <img src="images/ambience_new_storefront_2.jpg" alt="Cozy Corner Seating">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESIGNER CREDIT SECTION -->
+    <section class="designer-credit">
+        <div class="designer-wrapper">
+            <div class="designer-image">
+                <img src="images/designer_vignesh.jpg" alt="Designed by MR. Vignesh">
+            </div>
+            <div class="designer-info">
+                <span class="designed-by-label">Designed by</span>
+                <h2 class="designer-name">MR. Vignesh</h2>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        // INGREDIENTS DATA
+        const ingredientsData = {
+            breakfast: {
+                "Grains & Bread": ["Rice", "Idli rice / Parboiled rice", "Wheat flour (atta)", "Maida", "Oats", "Bread", "Rava (semolina)", "Poha (flattened rice)", "Cornflakes"],
+                "Pulses & Legumes": ["Urad dal", "Toor dal", "Moong dal", "Peanuts", "Rajma (for chutney/sides)"],
+                "Dairy & Eggs": ["Milk", "Curd", "Butter", "Ghee", "Cheese", "Paneer (small use)", "Eggs"],
+                "Fruits": ["Banana", "Apple", "Mango / Berries", "Papaya", "Orange", "Avocado", "Dates (optional)"],
+                "Vegetables": ["Onion", "Tomato", "Potato", "Green chili", "Ginger", "Carrot", "Beans", "Capsicum", "Cabbage", "Beetroot", "Coriander leaves", "Curry leaves", "Coconut"],
+                "Nuts & Seeds": ["Peanut butter", "Almonds", "Cashews", "Chia seeds", "Flax seeds"],
+                "Spices & Others": ["Salt", "Turmeric", "Mustard seeds", "Cumin seeds", "Pepper", "Sambar powder", "Garam masala", "Baking powder", "Vanilla essence", "Sugar / Honey", "Jam", "Oil"]
+            },
+            lunch: {
+                "Grains": ["Basmati rice", "Regular rice", "Wheat flour (atta)", "Naan flour (maida)"],
+                "Pulses & Beans": ["Toor dal", "Moong dal", "Masoor dal", "Rajma", "Chole (chickpeas)"],
+                "Dairy": ["Curd", "Butter", "Ghee", "Cream", "Paneer"],
+                "Meat & Fish": ["Chicken", "Mutton", "Fish", "Eggs"],
+                "Vegetables": ["Onion", "Tomato", "Potato", "Capsicum", "Carrot", "Beans", "Peas", "Spinach (palak)", "Cauliflower", "Brinjal", "Cabbage", "Coriander", "Mint"],
+                "Spices & Pastes": ["Turmeric", "Red chili powder", "Coriander powder", "Garam masala", "Biryani masala", "Chicken masala", "Ginger-garlic paste", "Cumin seeds", "Bay leaf", "Cinnamon", "Cloves", "Cardamom"],
+                "Others": ["Lemon", "Oil", "Vinegar", "Green chilies"]
+            },
+            snacks: {
+                "Base Items": ["Maida", "Bread", "Potatoes", "Poha", "Rice flour", "Corn kernels"],
+                "Pulses & Nuts": ["Chana (boiled)", "Peanuts", "Moong sprouts", "Makhana"],
+                "Dairy": ["Milk", "Butter", "Paneer", "Cheese"],
+                "Vegetables": ["Onion", "Tomato", "Cucumber", "Carrot", "Cabbage", "Capsicum", "Green chili", "Lemon", "Coriander"],
+                "Spices & Sauces": ["Chaat masala", "Black salt", "Red chili powder", "Pepper", "Tomato ketchup", "Green chutney", "Tamarind chutney", "Soy sauce", "Vinegar"],
+                "Baking & Sweets": ["Cocoa powder", "Sugar", "Baking soda", "Baking powder", "Chocolate chips"],
+                "Others": ["Tea powder", "Coffee", "Oil (deep fry)", "Popcorn kernels"]
+            },
+            dinner: {
+                "Grains & Bread": ["Rice", "Basmati rice", "Wheat flour", "Maida", "Noodles", "Pasta", "Burger buns", "Shawarma wraps"],
+                "Pulses": ["Toor dal", "Moong dal", "Besan"],
+                "Dairy": ["Milk", "Curd", "Butter", "Ghee", "Paneer", "Cheese"],
+                "Meat & Eggs": ["Chicken", "Fish", "Eggs"],
+                "Vegetables": ["Onion", "Tomato", "Potato", "Capsicum", "Carrot", "Beans", "Mushroom", "Spinach", "Cabbage", "Peas", "Garlic", "Ginger", "Coriander"],
+                "Spices & Sauces": ["Turmeric", "Chili powder", "Garam masala", "Kitchen King masala", "Pepper", "Soy sauce", "Chilli sauce", "Vinegar", "Ginger-garlic paste"],
+                "Others": ["Bread (for toast/garlic bread)", "Yeast (optional)", "Lemon", "Oil"]
+            }
+        };
+
+        function loadIngredients(category) {
+            const display = document.getElementById('ingredients-display');
+            const data = ingredientsData[category];
+            let html = '';
+
+            // Update Active Tab
+            document.querySelectorAll('.ingredient-card-tab').forEach(btn => btn.classList.remove('active'));
+            // Find the clicked element's parent if click hit the span, or the element itself
+            let targetParams = event.target.closest('.ingredient-card-tab');
+            if (targetParams) targetParams.classList.add('active');
+
+            if (!data) return;
+
+            // Generate Grid
+            html += '<div class="ing-grid-container">';
+            for (const [group, items] of Object.entries(data)) {
+                html += `
+                <div class="ing-card">
+                    <h3>${group}</h3>
+                    <ul>
+                        ${items.map(item => `<li>• ${item}</li>`).join('')}
+                    </ul>
+                </div>
+                `;
+            }
+            html += '</div>';
+
+            // Fade Effect
+            display.style.opacity = '0';
+            setTimeout(() => {
+                display.innerHTML = html;
+                display.style.opacity = '1';
+
+                // Re-attach 3D Tilt to new items
+                document.querySelectorAll('.ing-card').forEach(card => attachTiltEffect(card));
+            }, 200);
+        }
+
+        // Initialize with Breakfast
+        window.addEventListener('load', () => {
+            const breakfastBtn = document.querySelector('.ingredient-card-tab'); // First one is breakfast
+            if (breakfastBtn) breakfastBtn.classList.add('active'); // Ensure visual state
+
+            // Manually trigger load for initial state without event object issues
+            const display = document.getElementById('ingredients-display');
+            const data = ingredientsData['breakfast'];
+            let html = '<div class="ing-grid-container">';
+            for (const [group, items] of Object.entries(data)) {
+                html += `
+                <div class="ing-card">
+                    <h3>${group}</h3>
+                    <ul>
+                        ${items.map(item => `<li>• ${item}</li>`).join('')}
+                    </ul>
+                </div>`;
+            }
+            html += '</div>';
+            display.innerHTML = html;
+
+            // Attach tilt to initial ingredients
+            document.querySelectorAll('.ing-card').forEach(card => attachTiltEffect(card));
+
+            // Attach tilt to ambience items
+            document.querySelectorAll('.ambience-item').forEach(item => attachTiltEffect(item));
+
+            // Attach tilt to FEATURE CARDS (Ingredients, Chef, Ambience 3D)
+            document.querySelectorAll('.feature-card, .chef-card').forEach(card => attachTiltEffect(card));
+        });
+
+        // 3D TILT EFFECT FUNCTION (Enhanced)
+        function attachTiltEffect(card) {
+            // Add glare element if not exists
+            let glare = card.querySelector('.glare');
+            if (!glare) {
+                glare = document.createElement('div');
+                glare.className = 'glare';
+                glare.style.position = 'absolute';
+                glare.style.top = '0';
+                glare.style.left = '0';
+                glare.style.width = '100%';
+                glare.style.height = '100%';
+                glare.style.background = 'linear-gradient(135deg, rgba(255,255,255,0.4) 0%, rgba(255,255,255,0) 100%)';
+                glare.style.pointerEvents = 'none';
+                glare.style.opacity = '0';
+                glare.style.transition = 'opacity 0.2s';
+                glare.style.mixBlendMode = 'overlay';
+                card.appendChild(glare);
+            }
+
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                const centerX = rect.width / 2;
+                const centerY = rect.height / 2;
+
+                // Stronger rotation (max 15deg)
+                const rotateX = ((y - centerY) / centerY) * -15;
+                const rotateY = ((x - centerX) / centerX) * 15;
+
+                // 3D Transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.08)`;
+
+                // Glare Effect
+                glare.style.opacity = '1';
+                glare.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(255,255,255,0.3), transparent 60%)`;
+
+                // Lift image OR icon slightly
+                const img = card.querySelector('img');
+                const icon = card.querySelector('.icon');
+                if (img) img.style.transform = 'translateZ(30px)';
+                if (icon) icon.style.transform = 'translateZ(30px)';
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0) rotateY(0) scale(1)';
+                if (glare) glare.style.opacity = '0';
+                const img = card.querySelector('img');
+                const icon = card.querySelector('.icon');
+                if (img) img.style.transform = 'translateZ(0)';
+                if (icon) icon.style.transform = 'translateZ(0)';
+            });
+        }
+
+        // LIGHTBOX FUNCTIONS
+        // LIGHTBOX FUNCTIONS (Refined)
+        function openLightbox(element) {
+            const lightbox = document.getElementById('ambience-lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            const captionText = document.getElementById('lightbox-caption');
+            const img = element.querySelector('img');
+
+            lightboxImg.src = img.src;
+            captionText.innerHTML = img.alt;
+
+            // Show with fade
+            lightbox.classList.add('show');
+            lightbox.classList.remove('hide');
+            lightbox.style.display = 'flex';
+
+            // Slight delay to allow display:flex to apply before opacity transition
+            requestAnimationFrame(() => {
+                lightbox.style.opacity = '1';
+            });
+
+            // STRICT SCROLL LOCK
+            document.body.style.top = `-${window.scrollY}px`;
+            document.body.style.position = 'fixed';
+            document.body.style.width = '100%';
+        }
+
+        function closeLightbox() {
+            const lightbox = document.getElementById('ambience-lightbox');
+            lightbox.style.opacity = '0';
+
+            const scrollY = document.body.style.top;
+
+            // Wait for transition
+            setTimeout(() => {
+                lightbox.style.display = 'none';
+                lightbox.classList.remove('show');
+
+                // RELEASE SCROLL LOCK
+                document.body.style.position = '';
+                document.body.style.top = '';
+                document.body.style.width = '';
+                window.scrollTo(0, parseInt(scrollY || '0') * -1);
+            }, 300);
+        }
+
+        // Close when clicking outside
+        window.addEventListener('click', (e) => {
+            const lightbox = document.getElementById('ambience-lightbox');
+            if (e.target === lightbox) {
+                closeLightbox();
+            }
+        });
+    </script>
+
+    <!-- Login Modal (Neon Redesign) -->
+    <div id="login-modal" class="modal">
+        <div class="login-container-neon modal-neon-content">
+            <span class="close-neon" onclick="closeLogin()">&times;</span>
+
+            <!-- Left Side: Info -->
+            <div class="login-info">
+                <h2>Welcome</h2>
+                <p>Access your dashboard or order delicious food.</p>
+                <div style="margin-top: 2rem;">
+                    <p style="font-size: 0.9rem; opacity: 0.8;">New Staff?</p>
+                    <a href="signup.html"
+                        style="color: var(--accent-color); text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--accent-color); padding-bottom: 2px;">Register
+                        Here</a>
+                </div>
+            </div>
+
+            <!-- Right Side: Forms -->
+            <div class="login-form-section">
+                <!-- Tabs -->
+                <div class="auth-tabs">
+                    <button class="auth-tab-btn active" onclick="switchTab('user')">User</button>
+                    <button class="auth-tab-btn" onclick="switchTab('staff')">Staff</button>
+                    <button class="auth-tab-btn" onclick="switchTab('admin')">Admin</button>
+                </div>
+
+                <!-- User Login -->
+                <form id="user-login" onsubmit="handleUserLogin(event)">
+                    <div class="input-box">
+                        <input type="text" id="user-mobile" required>
+                        <!-- Changed ID to match standalone login.html for consistency, will update app.js to support both or standardize -->
+                        <label>Mobile Number</label>
+                    </div>
+
+                    <div id="otp-section" style="display:none;">
+                        <div class="input-box">
+                            <input type="text" id="user-otp">
+                            <label>Enter OTP (Try: 1234)</label>
+                        </div>
+                    </div>
+
+                    <button type="button" id="send-otp-btn" class="login-btn-neon" onclick="sendLoginOtp()">Send
+                        OTP</button>
+                    <button type="submit" id="login-btn" class="login-btn-neon" style="display:none;">Login</button>
+
+                    <div style="text-align:center; margin-top:10px; font-size:0.8rem; color:#aaa;">OR</div>
+                    <button type="button" class="login-btn-neon"
+                        style="border-color:#fff; color:#fff; font-size:0.9rem; margin-top:10px;">Login with
+                        Google</button>
+                </form>
+
+                <!-- Staff Login -->
+                <form id="staff-login" style="display:none;" onsubmit="handleStaffLogin(event)">
+                    <div class="input-box">
+                        <input type="text" id="emp-id" required>
+                        <label>Employee ID</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="emp-pass" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Staff Login</button>
+                </form>
+
+                <!-- Admin Login -->
+                <form id="admin-login" style="display:none;" onsubmit="handleStaffLogin(event)">
+                    <div class="input-box">
+                        <input type="text" id="admin-id" required>
+                        <label>Admin ID</label>
+                    </div>
+                    <div class="input-box">
+                        <input type="password" id="admin-pass" required>
+                        <label>Password</label>
+                    </div>
+                    <button type="submit" class="login-btn-neon">Admin Login</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Lightbox Modal for Ambience -->
+    <div id="ambience-lightbox" class="lightbox">
+        <span class="close-lightbox" onclick="closeLightbox()">&times;</span>
+        <img class="lightbox-content" id="lightbox-img">
+        <div id="lightbox-caption"></div>
+    </div>
+
+    <script src="app.js"></script>
+    <script>
+        window.addEventListener('load', function () {
+            if (localStorage.getItem('openAdmin') === 'true') {
+                localStorage.removeItem('openAdmin');
+                document.getElementById('login-modal').style.display = 'flex';
+                if (typeof switchTab === 'function') switchTab('admin');
+            }
+        });
+
+        // Ensure modal closing works
+        function closeLogin() {
+            document.getElementById('login-modal').style.display = 'none';
+        }
+
+        // Make sure clicking outside closes it
+        window.onclick = function (event) {
+            const modal = document.getElementById('login-modal');
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+    <script>
+        // --- CUSTOM 3D CHEF CARD ENGINE ---
+        document.querySelectorAll('.chef-card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+
+                // Calculate percentage (0 to 1)
+                const xPct = x / rect.width;
+                const yPct = y / rect.height;
+
+                // Calculate rotation (Max +/- 10 degrees)
+                const rotateX = (0.5 - yPct) * 20;
+                const rotateY = (xPct - 0.5) * 20;
+
+                // Apply Transform
+                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+
+            // Reset on leave
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
+            });
+        });
+    </script>
+    <script>
+        // --- SCROLLSPY SECTION HIGHLIGHTER ---
+        const sections = document.querySelectorAll('#ingredients, #chefs, #ambience');
+
+        const observerOptions = {
+            threshold: 0.4 // Highlight when 40% of section is visible
+        };
+
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    // Remove active class from all
+                    sections.forEach(s => s.classList.remove('active-section'));
+                    // Add to current
+                    entry.target.classList.add('active-section');
+                }
+            });
+        }, observerOptions);
+
+        sections.forEach(section => {
+            sectionObserver.observe(section);
+        });
+    </script>
+</body>
+
+</html>
