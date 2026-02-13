@@ -19,16 +19,13 @@
             <div class="logo-smile"></div>
         </div>
         <ul class="nav-links">
-            <!-- Home link removed -->
             <li><a href="menu.html">Menu</a></li>
             <li><a href="booking.html">Book A Table</a></li>
             <li><a href="orders.html">Orders</a></li>
             <li><a href="offers.html">Offers</a></li>
             <li><a href="profile.html">My Profile</a></li>
             <li><a href="feedback.html">Feedback</a></li>
-            <li><a href="#"
-                    onclick="document.getElementById('login-modal').style.display='flex'; switchTab('admin')">Admin
-                    Login</a></li>
+            <li><a href="#" id="nav-login-btn" onclick="handleAuthClick()">Login</a></li>
         </ul>
     </nav>
 
@@ -533,35 +530,21 @@
             <div class="login-info">
                 <h2>Welcome</h2>
                 <p>Access your dashboard or order delicious food.</p>
-                <div style="margin-top: 2rem;">
-                    <p style="font-size: 0.9rem; opacity: 0.8;">New Staff?</p>
-                    <a href="signup.html"
-                        style="color: var(--accent-color); text-decoration: none; font-weight: bold; border-bottom: 2px solid var(--accent-color); padding-bottom: 2px;">Register
-                        Here</a>
-                </div>
             </div>
 
             <!-- Right Side: Forms -->
             <div class="login-form-section">
-                <!-- Tabs -->
-                <div class="auth-tabs">
-                    <button class="auth-tab-btn active" onclick="switchTab('user')">User</button>
-                    <button class="auth-tab-btn" onclick="switchTab('staff')">Staff</button>
-                    <button class="auth-tab-btn" onclick="switchTab('admin')">Admin</button>
-                </div>
-
                 <!-- User Login -->
                 <form id="user-login" onsubmit="handleUserLogin(event)">
                     <div class="input-box">
                         <input type="text" id="user-mobile" required>
-                        <!-- Changed ID to match standalone login.html for consistency, will update app.js to support both or standardize -->
                         <label>Mobile Number</label>
                     </div>
 
                     <div id="otp-section" style="display:none;">
                         <div class="input-box">
                             <input type="text" id="user-otp">
-                            <label>Enter OTP (Try: 1234)</label>
+                            <label>Enter OTP</label>
                         </div>
                     </div>
 
@@ -570,35 +553,9 @@
                     <button type="submit" id="login-btn" class="login-btn-neon" style="display:none;">Login</button>
 
                     <div style="text-align:center; margin-top:10px; font-size:0.8rem; color:#aaa;">OR</div>
-                    <button type="button" class="login-btn-neon"
+                    <button type="button" class="login-btn-neon" onclick="handleGoogleLogin()"
                         style="border-color:#fff; color:#fff; font-size:0.9rem; margin-top:10px;">Login with
                         Google</button>
-                </form>
-
-                <!-- Staff Login -->
-                <form id="staff-login" style="display:none;" onsubmit="handleStaffLogin(event)">
-                    <div class="input-box">
-                        <input type="text" id="emp-id" required>
-                        <label>Employee ID</label>
-                    </div>
-                    <div class="input-box">
-                        <input type="password" id="emp-pass" required>
-                        <label>Password</label>
-                    </div>
-                    <button type="submit" class="login-btn-neon">Staff Login</button>
-                </form>
-
-                <!-- Admin Login -->
-                <form id="admin-login" style="display:none;" onsubmit="handleStaffLogin(event)">
-                    <div class="input-box">
-                        <input type="text" id="admin-id" required>
-                        <label>Admin ID</label>
-                    </div>
-                    <div class="input-box">
-                        <input type="password" id="admin-pass" required>
-                        <label>Password</label>
-                    </div>
-                    <button type="submit" class="login-btn-neon">Admin Login</button>
                 </form>
             </div>
         </div>
@@ -654,11 +611,38 @@
                 card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
             });
 
-            // Reset on leave
             card.addEventListener('mouseleave', () => {
                 card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)';
             });
         });
+
+        // --- SCROLL ZOOM ANIMATION ---
+        const zoomObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Trigger once
+                }
+            });
+        }, { threshold: 0.3 }); // Start when 30% visible
+
+        document.querySelectorAll('.chef-image img').forEach(img => {
+            img.classList.add('scroll-zoom-in');
+            zoomObserver.observe(img);
+        });
+
+        // Designer Section Animations
+        const designerImg = document.querySelector('.designer-image');
+        if (designerImg) {
+            designerImg.classList.add('scroll-zoom-out');
+            zoomObserver.observe(designerImg);
+        }
+
+        const designerText = document.querySelector('.designer-info');
+        if (designerText) {
+            designerText.classList.add('scroll-fade-up');
+            zoomObserver.observe(designerText);
+        }
     </script>
     <script>
         // --- SCROLLSPY SECTION HIGHLIGHTER ---

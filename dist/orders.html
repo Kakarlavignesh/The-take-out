@@ -27,13 +27,16 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 2rem 5%;
-            background: transparent !important;
-            border: none;
+            padding: 1.5rem 5%;
+            background: rgba(0, 0, 0, 0.4) !important;
+            backdrop-filter: blur(10px);
             position: fixed;
             top: 0;
             width: 100%;
             z-index: 1000;
+            box-sizing: border-box;
+            border: none !important;
+            /* Explicitly remove the thin line */
         }
 
         .logo-container {
@@ -44,87 +47,106 @@
 
         .logo {
             font-family: var(--font-heading);
-            font-size: 2.6rem;
+            font-size: 3rem;
             color: #fff;
             margin: 0;
             text-decoration: none;
             letter-spacing: 2px;
             white-space: nowrap;
             font-weight: 800;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s;
         }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
 
         .home-btn {
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(255, 255, 255, 0.2);
             color: #fff;
-            padding: 0.8rem 1.6rem;
+            padding: 0.6rem 1.2rem;
             border-radius: 50px;
             text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-            letter-spacing: 1.5px;
+            font-size: 0.85rem;
+            font-weight: 700;
             text-transform: uppercase;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(5px);
             display: flex;
             align-items: center;
-            gap: 1rem;
+            gap: 0.8rem;
             margin-left: 6rem;
         }
 
         .home-btn:hover {
-            background: var(--accent-color);
+            background: #FF8C00;
+            /* Vivid Yellow */
             color: #000;
-            border-color: var(--accent-color);
-            box-shadow: 0 0 25px rgba(218, 165, 32, 0.5);
-            transform: translateX(-5px);
+            border-color: #FF8C00;
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
+            transform: translateY(-2px);
         }
 
         .back-icon {
-            stroke-width: 2.5px;
-            width: 20px;
-            height: 20px;
+            stroke-width: 3px;
+            width: 18px;
+            height: 18px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 1.5rem;
+            gap: 1.2rem;
+            margin: 0;
+            padding: 0;
         }
 
         .nav-links li a {
-            color: #fff;
+            color: #fff !important;
             text-decoration: none;
-            padding: 0.8rem 1.5rem;
+            padding: 0.7rem 1.4rem;
             border-radius: 30px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            font-size: 1rem;
-            font-weight: 600;
+            border: 2.5px solid #ffffff !important;
+            font-size: 0.9rem;
+            font-weight: 700;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 1.5px;
             transition: all 0.3s ease;
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(5px);
         }
 
-        .nav-links li a:hover,
-        .nav-links li a.active {
-            background: var(--accent-color);
+        .nav-links li a:hover {
+            background: #FF8C00;
             color: #000;
-            border-color: var(--accent-color);
-            box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+            border-color: #FF8C00;
+        }
+
+        .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FF8C00;
+            border-color: #FF8C00;
+        }
+
+        .nav-links li a.active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #FF8C00;
+            border-color: #FF8C00;
         }
 
         .orders-page-wrapper {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            padding-top: 80px;
+            padding: 100px 20px 0;
+            /* Precisely balanced for the fixed navbar */
             box-sizing: border-box;
-            perspective: 1500px;
+            perspective: 2000px;
         }
 
         .mouse-glow {
@@ -133,7 +155,7 @@
             left: 0;
             width: 600px;
             height: 600px;
-            background: radial-gradient(circle, rgba(247, 231, 206, 0.1) 0%, rgba(247, 231, 206, 0.02) 40%, transparent 70%);
+            background: radial-gradient(circle, rgba(255, 140, 0, 0.1) 0%, rgba(255, 140, 0, 0.02) 40%, transparent 70%);
             border-radius: 50%;
             transform: translate(-50%, -50%);
             pointer-events: none;
@@ -143,12 +165,14 @@
         }
 
         .orders-container {
-            width: 90%;
+            width: 100%;
             max-width: 800px;
             z-index: 2;
             overflow-y: auto;
-            max-height: 70vh;
+            max-height: 60vh;
+            /* Reduced height for better vertical centering */
             padding-right: 15px;
+            margin-top: 1rem;
         }
 
         .orders-container::-webkit-scrollbar {
@@ -218,15 +242,22 @@
         }
 
         .order-status {
-            padding: 0.5rem 1.5rem;
+            display: inline-block;
+            padding: 0.5rem 0;
+            /* Vertical padding only, width handles horizontal */
+            width: 140px;
+            /* Fixed width for perfect centering */
             background: rgba(212, 175, 55, 0.1);
             border: 1px solid var(--accent-color);
             border-radius: 50px;
             color: var(--accent-color);
-            font-weight: 700;
+            font-weight: 800;
             text-transform: uppercase;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            text-align: center;
+            /* Critical for centering text */
+            backdrop-filter: blur(5px);
         }
 
         .order-total {
@@ -250,6 +281,24 @@
             font-size: 1.5rem;
             color: #fff;
             margin-bottom: 2rem;
+        }
+
+        .delete-order-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            background: transparent;
+            border: none;
+            color: rgba(255, 255, 255, 0.3);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            z-index: 10;
+        }
+
+        .delete-order-btn:hover {
+            color: #FF8C00;
+            transform: scale(1.2);
         }
 
         @keyframes fadeIn {
@@ -285,7 +334,6 @@
             <li><a href="booking.html">Book A Table</a></li>
             <li><a href="orders.html" class="active">Orders</a></li>
             <li><a href="feedback.html">Feedback</a></li>
-            <li><a href="index.html" onclick="localStorage.setItem('openAdmin', 'true')">Admin Login</a></li>
         </ul>
     </nav>
 
@@ -304,6 +352,7 @@
         </div>
     </div>
 
+    <script src="app.js"></script>
     <script>
         // Mouse Glow
         const glow = document.getElementById('mouseGlow');
@@ -316,10 +365,26 @@
             const user = JSON.parse(localStorage.getItem('user'));
             const container = document.getElementById('orders-list');
 
-            if (!user) return;
+            if (!user) {
+                // Determine if we need to show login prompt
+                // If user is null, we show the login prompt which is default content
+                return;
+            }
+
+            // Auto-fix for old sessions without ID
+            if (!user.id) {
+                alert("Session expired. Please login again.");
+                localStorage.removeItem('user');
+                window.location.href = 'index.html';
+                return;
+            }
+
+            // Clear the default "Please login" message if user exists
+            container.innerHTML = '<p style="color:white; text-align:center;">Loading your gourmet timeline...</p>';
 
             try {
-                const res = await fetch(`/api/orders/user/${user.id}`);
+                // Use API_BASE from app.js
+                const res = await fetch(`${API_BASE}/orders/user/${user.id}`);
                 const orders = await res.json();
 
                 if (orders.length === 0) {
@@ -336,23 +401,55 @@
                 }
 
                 container.innerHTML = orders.map((order, index) => `
-                    <div class="order-box" style="animation-delay: ${index * 0.1}s">
+                    <div class="order-box" id="order-${order.id}" style="animation-delay: ${index * 0.1}s; position: relative;">
+                        <button class="delete-order-btn" onclick="deleteOrder(${order.id})" title="Remove Order">✖</button>
                         <div class="order-info">
                             <h3>Order #${order.id}</h3>
                             <p><strong>Selection:</strong> ${order.itemsSummary || 'Gourmet Selection'}</p>
-                            <span class="order-total">$${order.totalPrice.toFixed(2)}</span>
+                            <span class="order-total">₹${order.totalPrice.toFixed(2)}</span>
                         </div>
                         <div style="text-align: right;">
                             <div class="order-status">${order.status}</div>
-                            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.3); margin-top: 1rem;">EST. ARRIVAL: 25 MIN</p>
+                            <p style="font-size: 0.8rem; color: rgba(255,255,255,0.4); margin-top: 1rem; font-weight: 700; letter-spacing: 1px;">EST. ARRIVAL: 25 MIN</p>
                         </div>
                     </div>
                 `).join('');
+
+                // Always add the "Explore Menu" button at the bottom after the list
+                container.innerHTML += `
+                    <div style="text-align: center; margin-top: 2rem; padding-bottom: 2rem;">
+                        <p style="color: rgba(255,255,255,0.4); margin-bottom: 1rem; font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.8rem;">Hungry for more?</p>
+                        <a href="menu.html" class="home-btn" style="margin: 0 auto; display: inline-flex;">Explore Menu</a>
+                    </div>
+                `;
             } catch (err) {
                 console.error("Error loading orders:", err);
                 container.innerHTML = "<p style='color: white; text-align: center;'>Unable to load your culinary history at this time.</p>";
             }
         }
+        async function deleteOrder(id) {
+            if (!confirm("Are you sure you want to remove this culinary record?")) return;
+
+            try {
+                // In a real app, you'd call a DELETE API here. 
+                // For now, we remove it from the UI for immediate satisfaction.
+                const orderElement = document.getElementById(`order-${id}`);
+                orderElement.style.transform = "scale(0.8) translateZ(-50px)";
+                orderElement.style.opacity = "0";
+
+                setTimeout(() => {
+                    orderElement.remove();
+                    // If no more orders, show the "No flavors found" message
+                    const container = document.getElementById('orders-list');
+                    if (container.querySelectorAll('.order-box').length === 0) {
+                        loadOrders(); // Refresh to show empty state
+                    }
+                }, 400);
+            } catch (err) {
+                console.error("Delete failed:", err);
+            }
+        }
+
         loadOrders();
     </script>
 </body>

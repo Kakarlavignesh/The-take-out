@@ -5,7 +5,8 @@ html {
 :root {
     /* DARK MODE (Default) */
     --primary-color: hsl(222, 47%, 11%);
-    --accent-color: hsl(43, 74%, 49%);
+    --accent-color: hsl(30, 100%, 50%);
+    /* Sunset Orange */
     --text-color: hsl(0, 0%, 97%);
     --bg-dark: hsl(220, 40%, 8%);
     --glass-bg: rgba(255, 255, 255, 0.08);
@@ -83,7 +84,8 @@ a {
     /* OFFSET FOR STICKY NAVBAR - Crucial for navigation */
     z-index: 1;
     overflow: visible !important;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: none;
+    /* Removed thin line */
 }
 
 /* Clear Visual Identity / Backgrounds */
@@ -129,10 +131,11 @@ a {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 1.5rem 50px;
+    padding: 1.5rem 20px;
     background: var(--bg-dark);
     /* Default solid background for other pages */
-    border-bottom: 1px solid var(--glass-border);
+    border-bottom: none !important;
+    /* Total line purge */
     position: sticky;
     top: 0;
     width: 100%;
@@ -156,12 +159,24 @@ a {
 
 /* Ensure text is always white on homepage hero */
 /* Ensure text is always white on homepage hero */
-.homepage .navbar .logo,
-.homepage .navbar .nav-links li a {
+.homepage .navbar .logo {
     color: #fff !important;
-    border-color: rgba(255, 255, 255, 0.4);
+    border: none;
+    border-radius: 50px;
+    padding: 0.8rem 1.6rem;
     text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
     /* Strong shadow for bright backgrounds */
+}
+
+.homepage .navbar .nav-links li a {
+    color: #fff !important;
+    border: 1.5px solid #ffffff !important;
+    border-radius: 50px;
+    padding: 0.8rem 1.6rem;
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.8);
+    background: rgba(0, 0, 0, 0.6);
+    /* Darker background for contrast */
+    backdrop-filter: blur(5px);
 }
 
 .homepage .navbar .nav-links li a:hover {
@@ -175,11 +190,11 @@ a {
 .logo {
     font-family: 'Playfair Display', serif;
     /* Elegant Serif Font */
-    font-size: 2.5rem;
-    /* Larger and more prominent */
+    font-size: 3rem;
+    /* 15% lead for visual authority */
     font-weight: 800;
     /* Extra Bold */
-    color: var(--accent-color);
+    color: #ffffff;
     /* Adaptive Gold Color */
     /* White for better contrast on image */
     letter-spacing: 2px;
@@ -191,15 +206,17 @@ a {
     box-shadow: none;
     position: relative;
     display: inline-block;
-    padding-bottom: 5px;
-    /* Space for the smile */
+    /* padding-bottom removed for better vertical centering */
+    white-space: nowrap;
 }
 
 .logo-smile {
     position: absolute;
-    bottom: -5px;
-    left: 10px;
-    width: 80%;
+    bottom: -8px;
+    /* Slightly lower for better clearance */
+    left: 0;
+    width: 100%;
+    /* Full width to match text */
     height: 15px;
     border-bottom: 4px solid var(--accent-color);
     border-radius: 50%;
@@ -231,14 +248,15 @@ a {
 
 .nav-links li a {
     display: inline-block;
+    white-space: nowrap;
     font-size: 1rem;
     font-weight: 600;
     color: #fff;
     /* White links */
     text-decoration: none;
     padding: 0.8rem 1.5rem;
-    border: 1px solid rgba(255, 255, 255, 0.4);
-    /* Subtle border */
+    border: 1.5px solid #ffffff;
+    /* Clean, visible white border */
     border-radius: 30px;
     /* Rounded pill shape */
     transition: all 0.3s ease;
@@ -254,8 +272,20 @@ a {
     color: #0d1428;
     background: var(--accent-color);
     border-color: var(--accent-color);
-    box-shadow: 0 4px 15px rgba(218, 165, 32, 0.4);
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.4);
     transform: translateY(-3px);
+}
+
+.back-home-nav-btn {
+    border-color: var(--accent-color) !important;
+    color: var(--accent-color) !important;
+    background: rgba(255, 140, 0, 0.05) !important;
+    /* Subtle tint */
+}
+
+.back-home-nav-btn:hover {
+    background: var(--accent-color) !important;
+    color: #000 !important;
 }
 
 /* Removed underline effect in favor of box style */
@@ -272,14 +302,15 @@ a {
     text-transform: uppercase;
     letter-spacing: 1px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(218, 165, 32, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 140, 0, 0.3);
     border: none;
     cursor: pointer;
+    white-space: nowrap;
 }
 
 .cta-button:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 20px rgba(218, 165, 32, 0.5);
+    box-shadow: 0 6px 20px rgba(255, 140, 0, 0.5);
     background-color: #fff;
     /* White on hover */
 }
@@ -318,7 +349,7 @@ a {
     background: var(--accent-color);
     color: #0d1428;
     /* Dark text on active */
-    box-shadow: 0 0 15px rgba(218, 165, 32, 0.4);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
 }
 
 /* ------------------------- */
@@ -344,7 +375,7 @@ a {
 .menu-item:hover {
     transform: translateY(-8px) scale(1.02);
     background: rgba(255, 255, 255, 0.1);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(218, 165, 32, 0.3);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 140, 0, 0.3);
     border-color: var(--accent-color);
 }
 
@@ -363,7 +394,8 @@ a {
 
 .menu-item h3 {
     font-family: var(--font-heading);
-    color: var(--accent-color);
+    color: #E0E0E0;
+    /* Champagne Silver */
     margin-bottom: 0.5rem;
     font-size: 1.4rem;
 }
@@ -564,17 +596,24 @@ a {
     position: relative;
     /* Ensure image container also supports 3D context if needed */
     transform-style: preserve-3d;
+    perspective: 1000px;
+    /* Add depth */
 }
 
 .chef-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    transition: transform 0.5s ease;
+    transition: transform 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    /* Smoother transition */
+    will-change: transform;
 }
 
 .chef-card:hover .chef-image img {
-    transform: scale(1.05);
+    transform: scale(1.5) translateZ(50px);
+    /* MAX DRAMA Zoom */
+    filter: brightness(1.25);
+    /* Even brighter */
 }
 
 .chef-details {
@@ -590,7 +629,8 @@ a {
 
 .chef-name {
     font-family: var(--font-heading);
-    color: var(--accent-color);
+    color: #E0E0E0;
+    /* Champagne Silver */
     font-size: 2.5rem;
     margin-bottom: 0.5rem;
 }
@@ -612,7 +652,8 @@ a {
 }
 
 .chef-info-item h4 {
-    color: var(--accent-color);
+    color: #E0E0E0;
+    /* Champagne Silver */
     font-size: 0.9rem;
     text-transform: uppercase;
     margin-bottom: 0.3rem;
@@ -1229,6 +1270,43 @@ a {
     margin-top: 10px;
 }
 
+.scroll-zoom-in {
+    opacity: 0;
+    transform: scale(0.8) translateZ(-50px);
+    /* Deeper start for dramatic entry */
+    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity, transform;
+}
+
+.scroll-zoom-in.visible {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+}
+
+/* New Zoom Out Entrance (Starts big, shrinks to normal) */
+.scroll-zoom-out {
+    opacity: 0;
+    transform: scale(1.5) translateZ(50px);
+    transition: opacity 1s cubic-bezier(0.19, 1, 0.22, 1), transform 1s cubic-bezier(0.19, 1, 0.22, 1);
+    will-change: opacity, transform;
+}
+
+.scroll-zoom-out.visible {
+    opacity: 1;
+    transform: scale(1) translateZ(0);
+}
+
+.scroll-fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.scroll-fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
 .signature-box {
     margin-top: 50px;
     text-align: center;
@@ -1236,12 +1314,23 @@ a {
 
 .sign-line {
     font-family: 'Brush Script MT', cursive;
-    font-size: 1.5rem;
-    color: #333;
-    border-bottom: 1px solid #aaa;
+    font-size: 1.65rem;
+    /* 10% larger */
+    color: #ffffff;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.4);
     display: inline-block;
     min-width: 150px;
     margin-bottom: 5px;
+}
+
+
+.cinematic-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.65rem;
+    color: #ffffff;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 0.5rem;
 }
 
 /* PRINT SETTINGS */
@@ -1327,7 +1416,8 @@ a {
 
 /* Ensure text visibility */
 .orders-page h2 {
-    color: var(--accent-color);
+    color: #E0E0E0;
+    /* Champagne Silver */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8);
 }
 
@@ -1503,10 +1593,11 @@ a {
     font-family: var(--font-heading);
     font-size: 3.5rem;
     /* Slightly larger for authority */
-    color: var(--accent-color);
+    color: #E0E0E0;
+    /* Champagne Silver for Readability */
     margin-bottom: 1rem;
     /* Clean heading separation */
-    text-shadow: 0 0 15px rgba(218, 165, 32, 0.2);
+    text-shadow: 0 0 15px rgba(255, 140, 0, 0.2);
 }
 
 .section-subtitle {
@@ -1560,7 +1651,7 @@ a {
 .ingredient-card-tab.active {
     border-color: var(--accent-color);
     transform: translateY(-5px);
-    box-shadow: 0 8px 25px rgba(218, 165, 32, 0.4);
+    box-shadow: 0 8px 25px rgba(255, 140, 0, 0.4);
 }
 
 .ingredient-card-tab span {
@@ -1667,7 +1758,7 @@ a {
 .ing-card:hover {
     background: rgba(255, 255, 255, 0.06);
     border-color: var(--accent-color);
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(218, 165, 32, 0.1);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), 0 0 15px rgba(255, 140, 0, 0.1);
     z-index: 10;
 }
 
@@ -1761,7 +1852,7 @@ a {
 
 .ambience-item:hover {
     /* Transform handled by JS for tilt, fallback visual lift if JS fails */
-    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(218, 165, 32, 0.2);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5), 0 0 25px rgba(255, 140, 0, 0.2);
     border-color: var(--accent-color);
     z-index: 10;
 }
@@ -1818,7 +1909,7 @@ a {
 
 .ambience-item:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 25px rgba(218, 165, 32, 0.2);
+    box-shadow: 0 10px 25px rgba(255, 140, 0, 0.2);
 }
 
 .ambience-item:hover img {
@@ -1937,18 +2028,22 @@ a {
     transform: translateY(-10px) scale(1.02);
     border-color: var(--accent-color);
     background: rgba(255, 255, 255, 0.06);
-    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(218, 165, 32, 0.1);
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3), 0 0 20px rgba(255, 140, 0, 0.1);
 }
 
 .feature-card .icon {
     font-size: 3rem;
     margin-bottom: 1rem;
+    text-shadow: 0 0 15px rgba(255, 140, 0, 0.4);
+    /* Sunset Orange Glow */
 }
 
 .feature-card h3 {
     font-family: var(--font-heading);
-    color: var(--accent-color);
+    color: #E0E0E0;
+    /* Champagne Silver */
     margin-bottom: 0.5rem;
+    white-space: nowrap;
 }
 
 /* ANIMATIONS */
@@ -2013,7 +2108,7 @@ a {
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5),
         0 0 10px var(--accent-color),
         /* Inner glow */
-        inset 0 0 20px rgba(218, 165, 32, 0.1);
+        inset 0 0 20px rgba(255, 140, 0, 0.1);
     border-radius: 20px;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
@@ -2136,7 +2231,7 @@ a {
     color: var(--accent-color);
     /* Text matches border initially */
     font-weight: 700;
-    box-shadow: 0 0 10px rgba(218, 165, 32, 0.2);
+    box-shadow: 0 0 10px rgba(255, 140, 0, 0.2);
     transition: 0.4s;
     margin-top: 20px;
     font-family: var(--font-heading);
@@ -2194,7 +2289,7 @@ a {
     background: var(--accent-color);
     color: #0d1428;
     border-color: var(--accent-color);
-    box-shadow: 0 0 15px rgba(218, 165, 32, 0.5);
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
     transform: scale(1.05);
 }
 
@@ -2225,6 +2320,7 @@ a {
     /* Inherits login-container-neon properties but potentially smaller for modal */
     transform: scale(0.9);
     /* Slightly smaller on desktop if needed */
+    white-space: nowrap;
 }
 
 /* Close button for modal */
@@ -2490,7 +2586,7 @@ a {
     width: auto;
     height: auto;
     border-radius: 8px;
-    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(218, 165, 32, 0.2);
+    box-shadow: 0 0 50px rgba(0, 0, 0, 0.8), 0 0 20px rgba(255, 140, 0, 0.2);
     border: 2px solid rgba(255, 255, 255, 0.1);
     transform: scale(0.9);
     transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -2890,12 +2986,13 @@ a {
 }
 
 .designer-image {
-    width: 120px;
-    height: 120px;
+    width: 250px;
+    /* Significantly increased */
+    height: 250px;
     border-radius: 50%;
     overflow: hidden;
-    border: 3px solid var(--accent-color);
-    box-shadow: 0 0 20px rgba(218, 165, 32, 0.3);
+    border: 4px solid var(--accent-color);
+    box-shadow: 0 0 30px rgba(255, 140, 0, 0.4);
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -2907,26 +3004,29 @@ a {
 }
 
 .designer-image:hover {
-    transform: scale(1.1) rotate(5deg);
+    transform: scale(1.05) rotate(0deg);
+    /* Subtle hover */
 }
 
 .designer-info {
     text-align: center;
+    margin-top: 1rem;
 }
 
 .designed-by-label {
     display: block;
-    font-size: 0.9rem;
-    color: #888;
-    letter-spacing: 2px;
+    font-size: 1.2rem;
+    color: #aaa;
+    letter-spacing: 3px;
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.8rem;
 }
 
 .designer-name {
     font-family: var(--font-heading);
-    font-size: 2rem;
+    font-size: 3.5rem;
+    /* Larger Title */
     color: var(--accent-color);
-    text-shadow: 0 0 10px rgba(218, 165, 32, 0.2);
+    text-shadow: 0 0 20px rgba(255, 140, 0, 0.4);
     margin: 0;
 }

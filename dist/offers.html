@@ -3,50 +3,192 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Offers - The Takeout</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Special Offers - The Takeout</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Page-specific overrides */
+        .offers-body {
+            background-color: #0d1428;
+            /* Deep dark blue background */
+            background-image: radial-gradient(circle at 50% 50%, #1a253a 0%, #0d1428 100%);
+            min-height: 100vh;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .offers-navbar .logo {
+            font-size: 3.5rem !important;
+            /* Increased size as requested */
+        }
+
+        .offers-container {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            padding: 2rem;
+            margin-top: 3rem;
+            perspective: 1000px;
+            /* Enable 3D space */
+        }
+
+        .offer-card {
+            background: rgba(255, 255, 255, 0.05);
+            /* Transparent/Glass */
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem 2rem;
+            width: 350px;
+            text-align: center;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 300px;
+        }
+
+        .offer-card:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+            /* 3D Tilt Effect */
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.6);
+            border-color: var(--accent-color);
+        }
+
+        .offer-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: #fff;
+            margin-bottom: 1rem;
+            font-weight: 700;
+        }
+
+        .offer-desc {
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: #ddd;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+        }
+
+        .book-btn {
+            background: var(--accent-color, #FF8C00);
+            color: #000;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-weight: 800;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 5px 15px rgba(255, 140, 0, 0.4);
+        }
+
+        .book-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 140, 0, 0.6);
+            background: #ffa500;
+        }
+
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--accent-color, #FF8C00);
+            font-size: 2.5rem;
+            margin-top: 2rem;
+            text-align: center;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .back-home-btn {
+            margin-top: 3rem;
+            padding: 12px 40px;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 50px;
+            color: #fff;
+            text-decoration: none;
+            font-family: sans-serif;
+            font-weight: 600;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            background: rgba(0, 0, 0, 0.3);
+            text-transform: uppercase;
+            font-size: 0.9rem;
+        }
+
+        .back-home-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #fff;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .offers-container {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
 </head>
 
-<body>
-    <nav class="navbar">
+<body class="offers-body">
+    <nav class="navbar offers-navbar">
         <div class="logo">
-            <!-- Image removed as per user request -->
             The Takeout
+            <div class="logo-smile"></div>
         </div>
         <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
+            <!-- Navigation links handled by style.css -->
             <li><a href="menu.html">Menu</a></li>
+            <li><a href="booking.html">Book A Table</a></li>
+            <li><a href="orders.html">Orders</a></li>
             <li><a href="offers.html" class="active">Offers</a></li>
-            <li><a href="#" onclick="showLogin()">Login</a></li>
-            <li><a href="admin.html">Admin</a></li>
+            <li><a href="profile.html">My Profile</a></li>
+            <li><a href="feedback.html">Feedback</a></li>
         </ul>
     </nav>
 
-    <section>
-        <h2 style="color:var(--accent-color); text-align:center;">Special Offers</h2>
-        <div style="display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; margin-top:2rem;">
-            <!-- Static Offers -->
-            <div
-                style="background:rgba(255,215,0,0.1); padding:2rem; border:1px solid var(--accent-color); border-radius:15px; width:300px; text-align:center;">
-                <h3>Weekend Feast</h3>
-                <p>Get 20% off on Family Platters every Saturday & Sunday!</p>
-                <button class="cta-button" style="margin-top:1rem;">Book Now</button>
-            </div>
+    <h1 class="page-title">Special Offers</h1>
 
-            <div
-                style="background:rgba(255,215,0,0.1); padding:2rem; border:1px solid var(--accent-color); border-radius:15px; width:300px; text-align:center;">
-                <h3>Loyalty Bonus</h3>
-                <p>Use your coins to get up to $50 off on next visit.</p>
-                <small>Requires valid Wallet QR</small>
+    <div class="offers-container">
+        <!-- Weekend Feast Card -->
+        <div class="offer-card">
+            <div>
+                <div class="offer-title">Weekend Feast</div>
+                <div class="offer-desc">
+                    Get 20% off on Family Platters<br>every Saturday & Sunday!
+                </div>
+            </div>
+            <div>
+                <!-- Linking to booking.html -->
+                <a href="booking.html" class="book-btn">BOOK NOW</a>
             </div>
         </div>
-        <div style="text-align:center; margin-top:2rem;">
-            <a href="index.html" class="cta-button" style="background:transparent; border:1px solid white;">← Back to
-                Home</a>
-        </div>
-    </section>
 
-    <script src="app.js"></script>
+        <!-- Loyalty Bonus Card -->
+        <div class="offer-card">
+            <div>
+                <div class="offer-title">Loyalty Bonus</div>
+                <div class="offer-desc">
+                    Use your coins to get up to ₹50<br>off on next visit.<br>
+                    <span style="font-size: 0.8rem; opacity: 0.7; margin-top: 10px; display: block;">Requires valid
+                        Wallet QR</span>
+                </div>
+            </div>
+            <!-- No button for this card as per image, just info -->
+        </div>
+    </div>
+
+    <!-- Back to Home Button -->
+    <a href="index.html" class="back-home-btn">← Back to Home</a>
 
 </body>
 

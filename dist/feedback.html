@@ -6,124 +6,303 @@
     <title>Feedback - The Takeout</title>
     <link rel="stylesheet" href="style.css">
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Inter:wght@300;400;600&display=swap"
         rel="stylesheet">
     <style>
+        :root {
+            --accent-gold: #D4AF37;
+            --vivid-yellow: #FF8C00;
+        }
+
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            /* Prevent scrolling as requested */
+        }
+
+        body {
+            background: url('ultra_luxury_booking_bg.png') no-repeat center center/cover fixed;
+            font-family: 'Inter', sans-serif;
+            color: #fff;
+        }
+
+        /* Deep Midnight & Gold Overlay (No Cement) */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at var(--x, 50%) var(--y, 50%),
+                    rgba(255, 140, 0, 0.15) 0%,
+                    transparent 55%),
+                linear-gradient(135deg, rgba(10, 10, 20, 0.8) 0%, rgba(20, 15, 5, 0.7) 100%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* Fully Transparent Navbar */
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 5%;
+            background: transparent !important;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            box-sizing: border-box;
+            border: none;
+        }
+
+        .logo {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #fff;
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-decoration: none;
+            text-shadow: 0 4px 15px rgba(0, 0, 0, 0.8);
+        }
+
+        .home-btn {
+            background: rgba(0, 0, 0, 0.3);
+            border: 1.5px solid #ffffff;
+            color: #fff;
+            padding: 0.6rem 1.2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            backdrop-filter: blur(5px);
+        }
+
+        /* VIVID YELLOW HOVER */
+        .home-btn:hover {
+            background: var(--vivid-yellow);
+            color: #000;
+            border-color: var(--vivid-yellow);
+            transform: translateY(-2px);
+            box-shadow: 0 0 20px rgba(255, 255, 0, 0.6);
+        }
+
+        /* Centered Compact Card Wrapper */
+        .feedback-page-wrapper {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            perspective: 2000px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
         .feedback-container {
-            max-width: 600px;
-            margin: 2rem auto;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 2rem;
-            border-radius: 15px;
-            border: 1px solid var(--glass-border);
+            width: 100%;
+            max-width: 500px;
+            background: rgba(10, 10, 10, 0.75);
+            backdrop-filter: blur(50px);
+            -webkit-backdrop-filter: blur(50px);
+            border: 1px solid rgba(212, 175, 55, 0.2);
+            padding: 3rem;
+            border-radius: 40px;
+            transform-style: preserve-3d;
+            box-shadow: 0 40px 100px rgba(0, 0, 0, 0.8);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3rem;
+            color: #FF8C00;
+            /* Saturated Header - Sunset Orange */
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 800;
+            margin-top: 0;
+            text-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
         }
 
         .rating-control {
             text-align: center;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .emoji-display {
+            font-size: 4.5rem;
+            margin-bottom: 0.5rem;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.6));
+        }
+
+        .rating-value {
+            font-size: 2.2rem;
+            color: var(--vivid-yellow);
+            font-family: 'Playfair Display', serif;
+            font-weight: 800;
+        }
+
+        .status-text {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            font-weight: 700;
         }
 
         input[type="range"] {
             width: 100%;
-            margin: 1rem 0;
-            accent-color: var(--accent-color);
+            height: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            outline: none;
+            appearance: none;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            cursor: pointer;
         }
 
-        .emoji-display {
-            font-size: 4rem;
-            margin-bottom: 1rem;
-            animation: float 3s infinite ease-in-out;
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 20px;
+            height: 20px;
+            background: var(--vivid-yellow);
+            border-radius: 50%;
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.8);
         }
 
-        .rating-value {
-            font-size: 2rem;
-            color: var(--accent-color);
-            font-family: var(--font-heading);
+        form label {
+            display: block;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: 0.6rem;
+            margin-top: 1.5rem;
+            font-weight: 600;
         }
 
-        .status-text {
-            font-size: 1.2rem;
-            color: #ccc;
+        input[type="text"],
+        textarea {
+            width: 100%;
+            box-sizing: border-box;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1rem;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+
+        input[type="text"]:focus,
+        textarea:focus {
+            outline: none;
+            border-color: var(--vivid-yellow);
+            box-shadow: 0 0 15px rgba(255, 255, 0, 0.2);
+        }
+
+        /* VIVID YELLOW BUTTON */
+        .submit-btn {
+            width: 100%;
+            padding: 1.2rem;
+            margin-top: 2.5rem;
+            background: var(--accent-gold);
+            border: none;
+            border-radius: 50px;
+            font-size: 1rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #000;
+            cursor: pointer;
+            transition: all 0.4s;
+        }
+
+        .submit-btn:hover {
+            background: var(--vivid-yellow);
+            transform: translateY(-4px) scale(1.02);
+            box-shadow: 0 15px 30px rgba(255, 255, 0, 0.5);
         }
     </style>
 </head>
 
 <body>
     <nav class="navbar">
-        <div class="logo">
-            <!-- Image removed as per user request -->
-            The Takeout
-        </div>
-        <ul class="nav-links">
-            <!-- Home link removed -->
-            <li><a href="menu.html">Menu</a></li>
-            <li><a href="booking.html">Book A Table</a></li>
-            <li><a href="orders.html">Orders</a></li>
-            <li><a href="feedback.html" class="active">Feedback</a></li>
-            <li><a href="index.html" onclick="localStorage.setItem('openAdmin', 'true')">Admin Login</a></li>
-        </ul>
+        <a href="index.html" class="logo">The Takeout</a>
+        <a href="index.html" class="home-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                style="width: 16px; height: 16px; stroke-width: 4px;">
+                <path d="M19 12H5M5 12L12 19M5 12L12 5" />
+            </svg>
+            Home
+        </a>
     </nav>
 
-    <section>
-        <div class="feedback-container">
-            <h2 style="text-align:center; color: var(--accent-color);">Rate Your Experience</h2>
+    <div class="feedback-page-wrapper">
+        <div class="feedback-container" id="feedback-card">
+            <h2>Feedback</h2>
 
             <div class="rating-control">
                 <div class="emoji-display" id="emoji">😐</div>
                 <div class="rating-value"><span id="rating-val">5.0</span>/10</div>
-                <div class="status-text" id="status-text">Average</div>
+                <div id="status-text" class="status-text">Average</div>
 
                 <input type="range" min="0" max="10" step="0.5" value="5.0" id="rating-slider"
                     oninput="updateRating(this.value)">
             </div>
 
             <form onsubmit="submitFeedbackForm(event)">
-                <label>Employee ID (8 Digits) <small>(Optional)</small></label>
-                <input type="text" id="emp-id" placeholder="e.g. 12345678" pattern="\d{8}"
-                    style="width:100%; padding:10px; margin-bottom:1rem; border-radius:5px; border:none;">
+                <label>Artist ID</label>
+                <input type="text" id="emp-id" placeholder="8-digit ID (Optional)" pattern="\d{8}">
 
-                <label>Comments</label>
-                <textarea id="comment" rows="4"
-                    style="width:100%; padding:10px; margin-bottom:1rem; border-radius:5px; border:none;"></textarea>
+                <label>Your Experience</label>
+                <textarea id="comment" rows="3" placeholder="Tell us more..."></textarea>
 
-                <button type="submit" class="cta-button" style="width:100%; cursor:pointer;">Submit Feedback</button>
+                <button type="submit" class="submit-btn">Share Reflections</button>
             </form>
-            <div style="text-align:center; margin-top:1rem;">
-                <a href="index.html" style="color:#aaa;">← Back to Home</a>
-            </div>
         </div>
-    </section>
+    </div>
 
     <script src="app.js"></script>
     <script>
+        const card = document.getElementById('feedback-card');
+        document.addEventListener('mousemove', (e) => {
+            const x = (e.clientX / window.innerWidth) * 100;
+            const y = (e.clientY / window.innerHeight) * 100;
+            document.body.style.setProperty('--x', x + '%');
+            document.body.style.setProperty('--y', y + '%');
+
+            const rotateY = (e.clientX - window.innerWidth / 2) / 60;
+            const rotateX = -(e.clientY - window.innerHeight / 2) / 50;
+            card.style.transform = `rotateY(${rotateY}deg) rotateX(${rotateX}deg)`;
+        });
+
         function updateRating(val) {
             document.getElementById('rating-val').innerText = parseFloat(val).toFixed(1);
             const emojiEl = document.getElementById('emoji');
             const statusEl = document.getElementById('status-text');
-
             val = parseFloat(val);
-
-            if (val <= 2.5) {
-                emojiEl.innerText = '😞';
-                statusEl.innerText = 'Poor';
-                statusEl.style.color = '#ff4d4d';
-            } else if (val <= 5) {
-                emojiEl.innerText = '😐';
-                statusEl.innerText = 'Average';
-                statusEl.style.color = '#ffd700';
-            } else if (val <= 7.5) {
-                emojiEl.innerText = '🙂';
-                statusEl.innerText = 'Good';
-                statusEl.style.color = '#90ee90';
-            } else if (val <= 9) {
-                emojiEl.innerText = '😁';
-                statusEl.innerText = 'Very Good';
-                statusEl.style.color = '#00ced1';
-            } else {
-                emojiEl.innerText = '🤩';
-                statusEl.innerText = 'Excellent';
-                statusEl.style.color = '#ff00ff'; // Special color for excellent
-            }
+            if (val <= 2.5) { emojiEl.innerText = '😞'; statusEl.innerText = 'Poor'; statusEl.style.color = '#ff4d4d'; }
+            else if (val <= 5) { emojiEl.innerText = '😐'; statusEl.innerText = 'Average'; statusEl.style.color = '#FF8C00'; }
+            else if (val <= 7.5) { emojiEl.innerText = '🙂'; statusEl.innerText = 'Good'; statusEl.style.color = '#90ee90'; }
+            else if (val <= 9) { emojiEl.innerText = '😁'; statusEl.innerText = 'Very Good'; statusEl.style.color = '#00ced1'; }
+            else { emojiEl.innerText = '🤩'; statusEl.innerText = 'Excellent'; statusEl.style.color = '#ff00ff'; }
         }
 
         async function submitFeedbackForm(e) {
@@ -131,18 +310,12 @@
             const empId = document.getElementById('emp-id').value;
             const rating = document.getElementById('rating-slider').value;
             const comment = document.getElementById('comment').value;
-
-            if (empId && empId.length !== 8) {
-                return alert("Employee ID must be 8 digits if provided.");
-            }
-
+            if (empId && empId.length !== 8) return alert("Employee ID must be 8 digits.");
             await submitFeedback(empId, rating, comment);
-            // Reset form
             document.getElementById('comment').value = '';
-            alert("Feedback submitted!");
+            alert("Thank you for your feedback!");
         }
     </script>
-
 </body>
 
 </html>

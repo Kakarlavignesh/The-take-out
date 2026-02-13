@@ -6,7 +6,7 @@
     <title>Menu - The Takeout</title>
     <link rel="stylesheet" href="style.css?v=5">
     <link
-        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Lato:wght@300;400;700&display=swap"
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Inter:wght@300;400;600&family=Lato:wght@300;400;700&display=swap"
         rel="stylesheet">
     <style>
         /* Styles moved to style.css */
@@ -20,12 +20,11 @@
             The Takeout
         </div>
         <ul class="nav-links">
-            <!-- Home link removed -->
+            <li><a href="index.html" class="back-home-nav-btn">&#8592; Back to Home</a></li>
             <li><a href="menu.html" class="active">Menu</a></li>
             <li><a href="booking.html">Book A Table</a></li>
             <li><a href="orders.html">Orders</a></li>
             <li><a href="feedback.html">Feedback</a></li>
-            <li><a href="index.html" onclick="localStorage.setItem('openAdmin', 'true')">Admin Login</a></li>
             <li><button id="theme-toggle" onclick="toggleTheme()" class="theme-btn">☀️/🌙</button></li>
         </ul>
     </nav>
@@ -46,7 +45,6 @@
         <!-- Bottom link removed as requested -->
     </section>
 
-    <a href="index.html" class="floating-back-btn">← Back to Home</a>
     <!-- Dish Detail Modal -->
     <div id="dish-modal" class="modal">
         <div class="modal-content">
@@ -64,7 +62,7 @@
                     <span id="qty-display">1</span>
                     <button class="qty-btn" onclick="updateModalQty(1)">+</button>
                 </div>
-                <button class="cta-button" onclick="addToCartFromModal()">Add to Cart - $<span
+                <button class="cta-button" onclick="addToCartFromModal()">Add to Cart - <span
                         id="modal-price">0</span></button>
             </div>
         </div>
@@ -80,53 +78,150 @@
     <div id="cart-modal" class="modal">
         <div class="modal-content" style="width: 500px;">
             <span class="close" onclick="closeModal('cart-modal')">&times;</span>
-            <h2 style="color:var(--accent-color); font-family:var(--font-heading);">Your Order</h2>
+            <h2>Your Order</h2>
             <div id="cart-items">
                 <!-- Items go here -->
                 <p style="text-align:center; color:#888;">Your cart is empty.</p>
             </div>
-            <div class="cart-total">
-                Total: $<span id="cart-total">0.00</span>
+
+            <div class="cart-total-section">
+                Total: <span id="cart-total"><span class="cart-total-amount">0.00</span></span>
             </div>
-            <div style="margin-top:1.5rem; display:flex; gap:1rem;">
-                <button class="cta-button"
-                    style="background:transparent; border:1px solid var(--text-color); color:var(--text-color); flex:1;"
-                    onclick="clearCart()">Clear</button>
-                <button class="cta-button" style="flex:2;" onclick="generateBill()">Checkout & Bill</button>
+
+            <div class="cart-actions">
+                <button class="btn-pill-ghost" onclick="clearCart()">Clear</button>
+                <button class="btn-pill-ghost" onclick="placeOrder()" style="flex: 1.5;">Order</button>
+                <button class="btn-pill-primary" onclick="openPaymentModal()">Checkout & Pay</button>
             </div>
         </div>
     </div>
 
-    <!-- Print Bill Section (Hidden until print) -->
-    <div id="bill-section" style="display:none;">
-        <div style="text-align:center; border-bottom:2px dashed #000; padding-bottom:1rem; margin-bottom:1rem;">
-            <h1 style="font-size:2rem; margin:0;">THE TAKEOUT</h1>
-            <p>123 Culinary Ave, Food City</p>
-            <p>Tel: +1 234 567 890</p>
+    <!-- Creative Invoice Section (Hidden until print) -->
+    <div id="bill-section" class="creative-invoice" style="display:none;">
+        <!-- Header with Curve -->
+        <div class="invoice-top">
+            <div class="food-image-container">
+                <!-- Using a specific image that looks like a bowl -->
+                <img src="images/lunch_biryani.jpg" alt="Delicious Food" class="invoice-food-img">
+            </div>
+            <div class="invoice-header-curve">
+                <div class="header-content">
+                    <div class="logo">
+                        <span style="color:#2c3e50;">The</span><span style="color:#fff;">Takeout</span>
+                    </div>
+                    <div class="company-address">
+                        <p>123 Culinary Ave, Food City</p>
+                        <p>Phone: +1 234 567 890</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div style="display:flex; justify-content:space-between; margin-bottom:1rem;">
-            <span>Date: <span id="bill-date"></span></span>
-            <span>Order #: <span id="bill-id"></span></span>
+
+        <div class="invoice-body">
+            <!-- Invoice Title & Details -->
+            <div class="invoice-meta">
+                <h1 class="invoice-title-text">INVOICE</h1>
+                <div class="meta-grid">
+                    <div>
+                        <strong>INVOICE NO:</strong> <span id="bill-id">000000</span>
+                    </div>
+                    <div>
+                        <strong>DATE:</strong> <span id="bill-date">00-00-00</span>
+                    </div>
+                    <div>
+                        <strong>INVOICE TO:</strong> Guest (Walk-in)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <table class="creative-table">
+                <thead>
+                    <tr>
+                        <th style="width:10%;">SL</th>
+                        <th style="width:50%;">DESCRIPTION</th>
+                        <th style="width:15%;">PRICE</th>
+                        <th style="width:10%;">QTY</th>
+                        <th style="width:15%;">TOTAL</th>
+                    </tr>
+                </thead>
+                <tbody id="bill-items">
+                    <!-- Rows generated by JS -->
+                </tbody>
+            </table>
+
+            <!-- Footer: Words, Totals, Sign, QR -->
+            <div class="invoice-footer-section">
+                <div class="left-footer">
+                    <p class="amount-in-words">IN WORD: <span id="amount-words">Five Hundred Only</span></p>
+
+                    <div class="terms-box">
+                        <strong>TERMS & CONDITION</strong>
+                        <p>Payment due upon receipt. Thank you for dining with us!</p>
+                    </div>
+
+                    <div class="payment-box">
+                        <strong>PAYMENT METHOD</strong>
+                        <div style="display:flex; align-items:center; gap:10px; margin-top:5px;">
+                            <img id="invoice-qr"
+                                src="https://api.qrserver.com/v1/create-qr-code/?size=80x80&data=TheTakeoutPayment"
+                                alt="QR" class="qr-code-small">
+                            <div>
+                                <p style="font-size:0.8rem; margin:0;">Scan to Pay</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="right-footer">
+                    <div class="totals-grid">
+                        <div class="total-line">
+                            <span>SUB TOTAL</span>
+                            <span>₹<span id="bill-subtotal">0.00</span></span>
+                        </div>
+                        <div class="total-line">
+                            <span>TAX (5%)</span>
+                            <span>₹<span id="bill-tax">0.00</span></span>
+                        </div>
+                        <div class="total-line grand">
+                            <span>TOTAL</span>
+                            <span>₹<span id="bill-total">0.00</span></span>
+                        </div>
+                    </div>
+
+                    <div class="signature-box">
+                        <p class="sign-line">The Takeout</p>
+                        <p>AUTHOR SIGN</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <table style="width:100%; border-collapse:collapse; text-align:left;">
-            <thead>
-                <tr style="border-bottom:1px solid #000;">
-                    <th style="padding:5px;">Item</th>
-                    <th style="padding:5px;">Qty</th>
-                    <th style="padding:5px; text-align:right;">Price</th>
-                    <th style="padding:5px; text-align:right;">Total</th>
-                </tr>
-            </thead>
-            <tbody id="bill-items">
-                <!-- Rows -->
-            </tbody>
-        </table>
-        <div style="text-align:right; margin-top:1rem; font-size:1.2rem; font-weight:bold;">
-            Grand Total: $<span id="bill-total">0.00</span>
+
+        <!-- Bottom Curve Decoration -->
+        <div class="bottom-decoration">
+            <img src="images/leaf_doodle.png" onerror="this.style.display='none'" alt="" class="leaf-doodle">
         </div>
-        <div style="text-align:center; margin-top:2rem; font-size:0.9rem;">
-            <p>Thank you for dining with us!</p>
-            <p>Please visit again.</p>
+    </div>
+
+    <!-- Payment Confirmation Modal (Premium UI) -->
+    <div id="payment-modal" class="modal">
+        <div class="modal-content payment-card" style="width: 400px; text-align: center;">
+            <h2 class="payment-title" style="margin-bottom: 20px;">Scan to Pay</h2>
+            <div class="qr-container-premium"
+                style="background: white; padding: 15px; border-radius: 15px; display: inline-block; margin-bottom: 20px;">
+                <img id="payment-qr-img" src="images/static-qr.png" alt="Payment QR"
+                    style="width: 200px; height: 200px;">
+            </div>
+            <div class="payment-amount-display" style="margin-bottom: 25px;">
+                <span class="label" style="display: block; font-size: 0.9rem; color: #aaa;">Total Amount</span>
+                <span id="payment-total-amount" class="amount"
+                    style="font-size: 2rem; color: #D4AF37; font-weight: bold;">₹0.00</span>
+            </div>
+            <button class="verify-btn" onclick="verifyAndPrint()"
+                style="width: 100%; padding: 15px; background: linear-gradient(45deg, #D4AF37, #F2C94C); border: none; color: black; font-weight: bold; border-radius: 50px; cursor: pointer; margin-bottom: 15px;">Verify
+                Payment</button>
+            <a href="#" class="back-link" onclick="closeModal('payment-modal')"
+                style="color: #888; text-decoration: none; font-size: 0.9rem;">Back to Cart</a>
         </div>
     </div>
 
